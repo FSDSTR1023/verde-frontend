@@ -29,6 +29,6 @@ Distribuido bajo la licencia MIT. Ver `LICENSE` para más información.
 
 ## Contacto
 
-Tu nombre - [@usuario](https://twitter.com/usuario) - correo@ejemplo.com
+Grupo verde - [appmygallety@gmail.com](mailto:appmygallety@gmail.com)
 
 En caso de dudas o sugerencias, no dudes en contactarnos.
