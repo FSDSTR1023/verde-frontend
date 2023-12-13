@@ -2,6 +2,13 @@
 
 Piclery es una aplicación web desarrollada con Node.js, Express y React - estilos: Material UI -, perfecta para fotógrafos que quieren administrar sus clientes y galerías de fotos. La base de datos utilizada es MongoDB con Mongoose.
 
+## Diseño
+
+![](./src/assets/diseno.webp)
+
+
+- Figma: [Piclery](https://www.figma.com/proto/tXBn8M6dpxvyywTgyq9Pte/MyappGallety?type=design&node-id=10-152&scaling=scale-down&page-id=0%3A1)
+
 ## Instalación
 
 1. Clona este repositorio: `git clone https://github.com/FSDSTR1023/verde-frontend.git`

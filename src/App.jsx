@@ -1,9 +1,7 @@
-import { useState } from "react";
 import "./App.css";
-import SignInSide from "./pages/Register";
+import SignInSide from "./pages/Signin";
 
 function App() {
-  const [count, setCount] = useState(0);
 
   return (
     <>
