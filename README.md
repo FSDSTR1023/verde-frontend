@@ -36,6 +36,6 @@ Distribuido bajo la licencia MIT. Ver `LICENSE` para más información.
 
 ## Contacto
 
-Grupo verde - [appmygallety@gmail.com](mailto:appmygallety@gmail.com)
+Grupo verde - [appmygallery@gmail.com](mailto:appmygallery@gmail.com)
 
 En caso de dudas o sugerencias, no dudes en contactarnos.
