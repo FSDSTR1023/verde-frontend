@@ -43,8 +43,8 @@ export function LogIn() {
     };
 
     return (
-        <Grid container component="main" sx={{ width: "60vw" }}>
-            <CssBaseline />
+        <Grid container component="main" sx={{ width: "60vw", minHeight: "100%" }}>
+            {/* <CssBaseline /> */}
             <Grid
                 item
                 xs={false}
