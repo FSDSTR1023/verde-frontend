@@ -1,4 +1,3 @@
-import { useState } from 'react';
 import Button from '@mui/material/Button';
 import Stack from '@mui/material/Stack';
 import { NavLink } from 'react-router-dom';
@@ -22,7 +21,9 @@ export const NavBar = () => {
                         my: 1
                     }}
                 >
-                    <img src="/logo.svg" alt="Logo de Picerly" loading="lazy" />
+                    <NavLink to='/'>
+                        <img src="/logo.svg" alt="Logo de Piclery" loading="lazy" />
+                    </NavLink>
                 </Stack>
 
                 <Stack
@@ -32,7 +33,7 @@ export const NavBar = () => {
                 >
 
                     <NavLink
-                        to="/"
+                        to="/table"
                         className={({ isActive }) => isActive ? 'active' : ''}
                     >
                         <Button
@@ -51,7 +52,7 @@ export const NavBar = () => {
 
                     <NavLink
                         to="/signin"
-                        className={({ isActive, isPending }) => isActive ? 'active' : ''}
+                        className={({ isActive }) => isActive ? 'active' : ''}
                     >
                         <Button
                             sx={{
@@ -69,7 +70,7 @@ export const NavBar = () => {
 
                     <NavLink
                         to="/login"
-                        className={({ isActive, isPending }) => isActive ? 'active' : ''}
+                        className={({ isActive }) => isActive ? 'active' : ''}
                     >
                         <Button
                             sx={{
