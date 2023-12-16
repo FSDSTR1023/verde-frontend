@@ -31,42 +31,54 @@ export const NavBar = () => {
                     alignItems='center'
                 >
 
-                    <NavLink to="/">
+                    <NavLink
+                        to="/"
+                        className={({ isActive }) => isActive ? 'active' : ''}
+                    >
                         <Button
                             sx={{
                                 mr: 5,
                                 fontFamily: 'Tenor Sans',
-                                color: 'black',
+                                color: '#7C7C7C',
                                 fontSize: '1rem',
-                                letterSpacing: '0.04rem'
+                                letterSpacing: '0.04rem',
+                                textTransform: 'uppercase'
                             }}
                         >
                             INICIO
                         </Button>
                     </NavLink>
 
-                    <NavLink to="/signin">
+                    <NavLink
+                        to="/signin"
+                        className={({ isActive, isPending }) => isActive ? 'active' : ''}
+                    >
                         <Button
                             sx={{
                                 mr: 5,
                                 fontFamily: 'Tenor Sans',
-                                color: 'black',
+                                color: '#7C7C7C',
                                 fontSize: '1rem',
-                                letterSpacing: '0.04rem'
+                                letterSpacing: '0.04rem',
+                                textTransform: 'uppercase'
                             }}
                         >
                             SIGN IN
                         </Button>
                     </NavLink>
 
-                    <NavLink to="/login">
+                    <NavLink
+                        to="/login"
+                        className={({ isActive, isPending }) => isActive ? 'active' : ''}
+                    >
                         <Button
                             sx={{
                                 mr: 5,
                                 fontFamily: 'Tenor Sans',
-                                color: 'black',
+                                color: '#7C7C7C',
                                 fontSize: '1rem',
-                                letterSpacing: '0.04rem'
+                                letterSpacing: '0.04rem',
+                                textTransform: 'uppercase'
                             }}
                         >
                             LOGIN
