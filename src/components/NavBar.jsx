@@ -3,6 +3,7 @@ import Stack from '@mui/material/Stack';
 import { NavLink } from 'react-router-dom';
 
 export const NavBar = () => {
+
     return (
         <>
             <Stack
@@ -33,7 +34,7 @@ export const NavBar = () => {
                 >
 
                     <NavLink
-                        to="/table"
+                        to="/"
                         className={({ isActive }) => isActive ? 'active' : ''}
                     >
                         <Button

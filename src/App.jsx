@@ -5,8 +5,8 @@ import { GalleryInfo } from "./pages/GalleryInfo.jsx";
 function App() {
   return (
     <>
-      <GalleryInfo />
-      {/* <RoutesApp /> */}
+      {/* <GalleryInfo /> */}
+      <RoutesApp />
     </>
   );
 }
