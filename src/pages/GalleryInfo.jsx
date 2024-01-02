@@ -20,13 +20,18 @@ export const GalleryInfo = () => {
       </CardActionArea>
       <CardActions
         sx={{
-          display: 'flex',
-          flexDirection: 'row',
-          justifyContent: 'space-between'
+          display: "flex",
+          flexDirection: "row",
+          justifyContent: "space-between",
         }}
       >
         <CardContent>
-          <Typography gutterBottom variant="h6" component="div" sx={{ fontFamily: 'Be Vietnam Pro' }}>
+          <Typography
+            gutterBottom
+            variant="h6"
+            component="div"
+            sx={{ fontFamily: "Be Vietnam Pro" }}
+          >
             LUCÍA Y MARIO
           </Typography>
           <Typography variant="body2" color="text.secondary">
@@ -38,7 +43,7 @@ export const GalleryInfo = () => {
         </CardContent>
 
         {/* <CardContent direction="row"> */}
-        <Stack direction="row" spacing={1} alignItems='center' sx={{ mr: 2.5 }} >
+        <Stack direction="row" spacing={1} alignItems="center" sx={{ mr: 2.5 }}>
           <Typography variant="body2" color="text.secondary">
             35
           </Typography>
