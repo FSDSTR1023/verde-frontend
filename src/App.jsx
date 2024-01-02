@@ -1,11 +1,12 @@
 import "./App.css";
 import { RoutesApp } from "./routes/RoutesApp";
+import { GalleryInfo } from "./pages/GalleryInfo.jsx";
 
 function App() {
-
   return (
     <>
-      <RoutesApp />
+      <GalleryInfo />
+      {/* <RoutesApp /> */}
     </>
   );
 }
