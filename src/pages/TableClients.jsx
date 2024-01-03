@@ -208,7 +208,7 @@ function EnhancedTableToolbar(props) {
   );
 }
 
-export default function TableClients() {
+export const TableClients = () => {
   const [order, setOrder] = useState('desc');
   const [orderBy, setOrderBy] = useState('name');
   const [selected, setSelected] = useState([]);
