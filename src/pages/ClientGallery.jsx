@@ -47,15 +47,14 @@ export const ClientGallery = () => {
       <ImageList
         variant="quilted"
         cols={4}
-        rowHeight={350}
+        rowHeight={100}
       >
         {
           pics
             .map((item) => (
               <ImageListItem
                 key={`masonry-${item.id}`}
-                cols={item.id % 3 ? 1 : 2}
-                rows={item.id % 4 ? 1 : 2}
+                rows={item.id % 2 ? 1 : 2}
               >
                 <img
                   src={item.image}
