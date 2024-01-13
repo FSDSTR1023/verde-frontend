@@ -25,7 +25,7 @@ export const ClientGallery = () => {
 
   return (
     <>
-      <SwiperPics pics={pics} />
+      <SwiperPics pics={pics} objectFit='contain' />
 
       <ActionBarClient
         left={[
