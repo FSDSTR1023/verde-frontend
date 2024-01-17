@@ -19,6 +19,9 @@ import FilterListIcon from '@mui/icons-material/FilterList';
 import { useState, useMemo } from 'react';
 import { FAB } from '../components/FAB';
 import { LogIn } from './Login';
+import { NewClient } from './NewClient';
+import { ShowDetails } from '../components/ShowDetails';
+import ClientFile from '../components/ClientFile';
 
 function createData(id, name, surname, email, address, phone) {
   return {
@@ -103,6 +106,12 @@ const headCells = [
     disablePadding: false,
     label: 'TELÉFONO',
   },
+  // {
+  //   id: 'details',
+  //   aling: 'center',
+  //   disablePadding: true,
+  //   label: 'VER',
+  // },
 ];
 
 function EnhancedTableHead(props) {
@@ -142,7 +151,7 @@ function EnhancedTableHead(props) {
                 fontWeight: 500,
                 fontSize: '0.9rem',
                 letterSpacing: '0.04rem',
-                textTransform: 'uppercase'
+                textTransform: 'uppercase',
               }}
             >
               {headCell.label}
@@ -154,6 +163,19 @@ function EnhancedTableHead(props) {
             </TableSortLabel>
           </TableCell>
         ))}
+
+        <TableCell sx={{
+          fontFamily: 'Tenor Sans',
+          color: '#7C7C7C',
+          fontWeight: 500,
+          fontSize: '0.9rem',
+          letterSpacing: '0.04rem',
+          textTransform: 'uppercase',
+          textAlign: 'center',
+        }}>
+          VER
+        </TableCell>
+
       </TableRow>
     </TableHead>
   );
@@ -300,17 +322,16 @@ export const TableClients = () => {
                 {visibleRows.map((row, index) => {
                   const isItemSelected = isSelected(row.id);
                   const labelId = `enhanced-table-checkbox-${index}`;
-
+                  // 🔴
                   return (
                     <TableRow
                       hover
-                      onClick={(event) => handleClick(event, row.id)}
+                      // onClick={(event) => handleClick(event, row.id)}
                       role="checkbox"
-                      aria-checked={isItemSelected}
+                      // aria-checked={isItemSelected}
                       tabIndex={-1}
                       key={row.id}
                       selected={isItemSelected}
-                      sx={{ cursor: 'pointer' }}
                     >
                       <TableCell padding="checkbox">
                         <Checkbox
@@ -319,8 +340,11 @@ export const TableClients = () => {
                           inputProps={{
                             'aria-labelledby': labelId,
                           }}
+                          onClick={(event) => handleClick(event, row.id)}
+                          aria-checked={isItemSelected}
                         />
                       </TableCell>
+
                       <TableCell
                         component="th"
                         id={labelId}
@@ -329,21 +353,29 @@ export const TableClients = () => {
                       >
                         {row.name}
                       </TableCell>
+
                       <TableCell
                         align="center"
                       >
                         {row.email}
                       </TableCell>
+
                       <TableCell
                         align="center"
                       >
                         {row.address}
                       </TableCell>
+
                       <TableCell
                         align="center"
                       >
                         {row.phone}
                       </TableCell>
+
+                      <TableCell align='right' sx={{ display: 'flex', justifyContent: 'center' }}>
+                        <ShowDetails modal={<ClientFile />} />
+                      </TableCell>
+
                     </TableRow>
                   );
                 })}
@@ -369,7 +401,7 @@ export const TableClients = () => {
             onRowsPerPageChange={handleChangeRowsPerPage}
           />
         </Paper>
-        <FAB modal={<LogIn />} />
+        <FAB modal={<NewClient />} />
       </Box>
     </>
   );

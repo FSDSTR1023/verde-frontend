@@ -3,9 +3,10 @@ import { SignIn } from "../pages/Signin";
 import { LogIn } from "../pages/Login";
 import { Layout1 } from "../layouts/Layout1";
 import { TableClients } from "../pages/TableClients";
-import { GalleryInfo } from "../pages/GalleryInfo";
+// import { GalleryInfo } from "../pages/GalleryInfo";
 import { Navigate } from 'react-router-dom';
 import { ClientGallery } from '../pages/ClientGallery';
+import { NewClient } from '../pages/NewClient';
 
 export const RoutesApp = () => {
     return (
@@ -15,7 +16,7 @@ export const RoutesApp = () => {
                     <Route path='/' element={<Navigate to='/table' />} />
 
                     {/* <Route path="/galleryclients" element={<ClientGallery />} /> */}
-                    <Route path="/galleryinfo" element={<GalleryInfo />} />
+                    {/* <Route path="/galleryinfo" element={<GalleryInfo />} /> */}
                     <Route path="/table" element={<TableClients />} />
                     <Route path="/signin" element={<SignIn />} />
                     <Route path="/login" element={<LogIn />} />

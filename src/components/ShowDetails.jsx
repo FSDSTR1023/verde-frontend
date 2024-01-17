@@ -1,5 +1,5 @@
-import { Box, Fab, Modal } from "@mui/material";
-import { Add } from '@material-ui/icons';
+import { Box, IconButton, Modal } from "@mui/material";
+import VisibilityOutlinedIcon from '@mui/icons-material/VisibilityOutlined';
 import { useState } from 'react';
 
 const style = {
@@ -17,7 +17,7 @@ const style = {
     alignItems: 'center'
 };
 
-export const FAB = ({ modal }) => {
+export const ShowDetails = ({ modal }) => {
 
     const [open, setOpen] = useState(false);
     const handleOpen = () => setOpen(true);
@@ -36,9 +36,9 @@ export const FAB = ({ modal }) => {
                 </Box>
             </Modal>
 
-            <Fab color="info" aria-label="add" sx={{ position: 'fixed', bottom: '3em', right: '3em', }} onClick={handleOpen}>
-                <Add />
-            </Fab>
+            <IconButton aria-label="details" onClick={handleOpen} >
+                <VisibilityOutlinedIcon color='disabled' />
+            </IconButton>
         </>
     )
 }
