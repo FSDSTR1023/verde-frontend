@@ -7,7 +7,7 @@ const style = {
     top: '50%',
     left: '50%',
     transform: 'translate(-50%, -50%)',
-    width: '70%',
+    width: '50%',
     bgcolor: '#FFF',
     borderRadius: '17px',
     boxShadow: '2px 6px 6px 4px rgba(0, 0, 0, 0.30)',
