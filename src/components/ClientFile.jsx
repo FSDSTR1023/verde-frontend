@@ -22,17 +22,24 @@ const ClientFile = () => {
             }}>
                 <Box sx={{
                     display: 'flex',
+                    flexDirection: window.innerWidth < 1323 ? 'column' : 'row',
                     justifyContent: 'space-between',
                     // bgcolor: 'yellowgreen',
                     gap: '3rem'
                 }}>
+
                     <Stack
                         direction='column'
                         alignItems='left'
 
                     >
                         <span style={{ display: 'flex', gap: '.5em' }}>
-                            <Typography variant="h6" textAlign='left' fontFamily='Tenor Sans' color='#7C7C7C' >
+                            <Typography
+                                variant="h6"
+                                textAlign='left'
+                                fontFamily='Tenor Sans'
+                                color='#7C7C7C'
+                            >
                                 DATOS PERSONALES
                             </Typography>
                             <EditOutlinedIcon color='disabled' />
@@ -74,7 +81,12 @@ const ClientFile = () => {
                         alignItems='left'
                     >
                         <span style={{ display: 'flex', gap: '.5em' }}>
-                            <Typography variant="h6" textAlign='left' fontFamily='Tenor Sans' color='#7C7C7C' >
+                            <Typography
+                                variant="h6"
+                                textAlign='left'
+                                fontFamily='Tenor Sans'
+                                color='#7C7C7C'
+                            >
                                 DATOS DE FACTURACIÓN
                             </Typography>
                             <EditOutlinedIcon color='disabled' />

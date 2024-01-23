@@ -6,8 +6,7 @@ import { RoutesApp } from "./routes/RoutesApp";
 function App() {
   return (
     <>
-      <GalleryInfo />
-      {/* <RoutesApp /> */}
+      <RoutesApp />
       {/* <ClientGallery /> */}
     </>
   );
