@@ -16,7 +16,6 @@ export const MyDropzone = ({ setPhotos }) => {
             return noRepeatedElements;
         });
 
-
     }, [])
 
     const { getRootProps, getInputProps, isDragActive } = useDropzone({ onDrop })
