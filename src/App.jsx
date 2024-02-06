@@ -1,13 +1,25 @@
+
 import "./App.css";
-import SignInSide from "./pages/Signin";
+import AuthProvider from './contexts/auth/auth.context';
+import { MainLayout } from "./layouts/MainLayout";
+import ClientGallery from './pages/ClientGallery';
+import OpenGallery from "./pages/OpenGallery";
+import AppMainRoute from "./routes/AppMainRoute";
 
 function App() {
 
   return (
-    <>
-      <SignInSide></SignInSide>
-    </>
+    // <ClientGallery />
+    //<OpenGallery />
+    <div>
+      <AuthProvider>
+        <MainLayout>
+          <AppMainRoute />
+        </MainLayout>
+      </AuthProvider>
+    </div>
   );
 }
 
 export default App;
+

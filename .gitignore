@@ -7,9 +7,9 @@ yarn-error.log*
 pnpm-debug.log*
 lerna-debug.log*
 
-# Managers
 pnpm-lock.yaml
 yarn.lock
+package-lock.json
 
 node_modules
 dist
@@ -26,3 +26,4 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+yarn.lock
