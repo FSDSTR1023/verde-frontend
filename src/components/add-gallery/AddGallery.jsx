@@ -1,10 +1,30 @@
 import React from "react";
 import { MyDropzone } from './drop-zone/MyDropzone';
 import { useState } from 'react';
+import { useEffect } from "react";
+import { customFetch } from "../../helper/customFetch";
+import { useGetClients } from "../../hooks/useGetClients";
+import { Select } from "flowbite-react";
+
+const labelTheme = {
+  "root": {
+    "base": "text-sm font-medium",
+    "disabled": "opacity-50",
+    "colors": {
+      "default": "text-gray-900 dark:text-white",
+      "info": "text-cyan-500 dark:text-cyan-600",
+      "failure": "text-red-700 dark:text-red-500",
+      "warning": "text-yellow-500 dark:text-yellow-600",
+      "success": "text-green-700 dark:text-green-500"
+    }
+  }
+}
 
 const AddGallery = () => {
 
   const [photos, setPhotos] = useState([]);
+
+  const { clients } = useGetClients();
 
   const SubmitHandel = async (e) => {
 
@@ -20,8 +40,6 @@ const AddGallery = () => {
       myData.append("file", file);
       myData.append("upload_preset", import.meta.env.VITE_CLOUDINARY_PRESET);
 
-
-
       const response = await fetch("https://api.cloudinary.com/v1_1/" + import.meta.env.VITE_CLOUDINARY_NAME + "/image/upload", {
         method: "POST",
         body: myData
@@ -33,10 +51,10 @@ const AddGallery = () => {
       console.log('📢 r', r)
     }
 
-    const { galleryName, client, minPics, totalPrice } = e.target;
+    const { title, client, minPics, totalPrice } = e.target;
 
     const data = {
-      galleryName: galleryName.value,
+      title: title.value,
       client: client.value,
       minPics: minPics.value,
       totalPrice: totalPrice.value,
@@ -60,14 +78,13 @@ const AddGallery = () => {
       <div className="relative z-0 w-full my-2 group ">
         <input
           type="text"
-          name="galleryName"
-          id="galleryName"
+          name="title"
+          id="title"
           className="top-5 block pb-2 pt-5 px-0 w-full text-base text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none focus:outline-none focus:ring-0 peer"
-          placeholder=" "
           required
         />
         <label
-          htmlFor="galleryName"
+          htmlFor="title"
           className="peer-focus:font-medium absolute text-sm text-gray-500 duration-300 transform -translate-y-6 scale-75 top-5 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto  peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
         >
           Nombe de la galería
@@ -75,14 +92,20 @@ const AddGallery = () => {
       </div>
 
       <div className="relative z-0 w-full my-2 group bg">
-        <input
-          type="text"
+        <select
           name="client"
           id="client"
-          className="top-5 block pb-2 pt-5 px-0 w-full text-base text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none focus:outline-none focus:ring-0 peer"
-          placeholder=" "
+          className="top-5 cursor-pointer block pb-2 pt-5 px-0 w-full text-base text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none focus:outline-none focus:ring-0 peer"
           required
-        />
+        >
+
+          <option></option>
+
+          {
+            clients.map(c => <option key={c._id} value={c._id}>{c.name} - {c.email}</option>)
+          }
+
+        </select>
         <label
           htmlFor="client"
           className="peer-focus:font-medium absolute text-sm text-gray-500 duration-300 transform -translate-y-6 scale-75 top-5 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto  peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
