@@ -1,15 +1,25 @@
+
 import "./App.css";
-import { GalleryInfo } from './components/GalleryInfo';
-import { ClientGallery } from "./pages/ClientGallery";
-import { RoutesApp } from "./routes/RoutesApp";
+import AuthProvider from './contexts/auth/auth.context';
+import { MainLayout } from "./layouts/MainLayout";
+import ClientGallery from './pages/ClientGallery';
+import OpenGallery from "./pages/OpenGallery";
+import AppMainRoute from "./routes/AppMainRoute";
 
 function App() {
+
   return (
-    <>
-      <RoutesApp />
-      {/* <ClientGallery /> */}
-    </>
+    // <ClientGallery />
+    //<OpenGallery />
+    <div>
+      <AuthProvider>
+        <MainLayout>
+          <AppMainRoute />
+        </MainLayout>
+      </AuthProvider>
+    </div>
   );
 }
 
 export default App;
+
