@@ -11,12 +11,15 @@ import OpenGallery from "../pages/OpenGallery";
 import { PATHS } from './paths';
 import PublicRoutes from './nested-routes/PublicRoutes';
 import PrivatesRoutes from './nested-routes/PrivatesRoutes';
+import Home from "../pages/Home";
 
 
 const AppMainRoute = () => {
   return (
     <>
       <Routes>
+
+        <Route index element={<Home />} />
 
         <Route path={PATHS.index} element={<PublicRoutes />}>
           <Route path={PATHS.publics.signin} element={<SignIn />} />
