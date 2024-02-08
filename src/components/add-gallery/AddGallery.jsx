@@ -1,17 +1,15 @@
 import React from "react";
-import { MyDropzone } from './drop-zone/MyDropzone';
+import { MyDropzone } from './drop-zone/MyDropzone.jsx';
 import { useState } from 'react';
-import { useEffect } from "react";
-import { customFetch } from "../../helper/customFetch";
-import { useGetClients } from "../../hooks/useGetClients";
-import { Select } from "flowbite-react";
+import { useGetClients } from "../../hooks/useGetClients.js";
+import { Gallery } from "../../api/gallery.js";
 
 
 const AddGallery = () => {
 
   const [photos, setPhotos] = useState([]);
 
-  const { clients } = useGetClients();
+  const { clients } = useGetClients([]);
 
   const SubmitHandel = async (e) => {
 
@@ -45,10 +43,18 @@ const AddGallery = () => {
       client: client.value,
       minPics: minPics.value,
       totalPrice: totalPrice.value,
-      dropzoneFile: urlphotoCloud
+      photos: urlphotoCloud
     };
 
     console.log("esto va a nuestro BE:", data);
+
+    const gallery = new Gallery();
+
+    const created = await gallery.create(data);
+
+    console.log(created);
+
+
 
   }
 
@@ -82,8 +88,8 @@ const AddGallery = () => {
 
         <label htmlFor="client" className="text-xs text-gray-500">Elige un cliente</label>
 
-        <select id="client" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5 mt-4">
-          <option selected>Clientes </option>
+        <select id="client" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5 mt-4">
+          <option>Clientes</option>
           {
             clients.map(c => <option key={c._id} value={c._id}>{c.name} - {c.email}</option>)
           }
