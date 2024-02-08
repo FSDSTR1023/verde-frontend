@@ -1,5 +1,5 @@
 
-export const customFetch = ({ path, method, data, token }) => {
+export const customFetch = async ({ path, method, data, token }) => {
 
     const be = import.meta.env.VITE_BACKEND_URL;
 
@@ -11,5 +11,13 @@ export const customFetch = ({ path, method, data, token }) => {
 
     const body = data && JSON.stringify(data);
 
-    return fetch(url, { method, headers, body });
+    try {
+        const response = await fetch(url, { method, headers, body });
+        const data = await response.json();
+
+        return data;
+    } catch (error) {
+        console.log(error.message);
+    }
+
 }

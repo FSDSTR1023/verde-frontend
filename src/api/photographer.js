@@ -19,9 +19,8 @@ export class Photographer {
         data,
       })
 
-      const registered = await response.json()
 
-      return registered;
+      return response;
 
     } catch (error) {
 
@@ -41,9 +40,8 @@ export class Photographer {
         data
       })
 
-      const logged = await response.json();
 
-      return logged;
+      return response;
 
     } catch (error) {
 
