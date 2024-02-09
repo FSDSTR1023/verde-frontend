@@ -28,7 +28,7 @@ function Galleries() {
       <div className="flex flex-wrap m-10 gap-10 justify-center">
 
         {
-          galleries.map(g => <CardGallery key={g._id} gallery={g} />)
+          galleries?.map(g => <CardGallery key={g._id} gallery={g} />).reverse()
         }
 
       </div>

@@ -3,15 +3,42 @@ import SwiperPics from "../components/swiper-pics/SwiperPics";
 import { pics } from "./ClientGallery";
 import Masonry from "react-masonry-css";
 import { ActionBarClient } from "../components/action-bar-client/ActionBarClient";
+import { useParams } from "react-router-dom";
+import { useEffect } from "react";
+import { Gallery } from "../api/gallery";
+import { useState } from "react";
+import { modifyPhoto } from "../helper/modifyPhoto";
 
 function OpenGallery() {
+
+  const { id } = useParams();
+
+  console.log("id:", id)
+
+  const [gal, setGal] = useState({});
+
+  useEffect(() => {
+    const gallery = new Gallery();
+    (async () => {
+
+      const currentGallery = await gallery.getById(id);
+
+      console.log(" 👍 currentGalery", currentGallery.gallery);
+
+      setGal(prev => currentGallery.gallery)
+
+
+    })()
+  }, [])
+
+
   return (
     <div>
       <div className="flex justify-between p-10 items-center flex-wrap">
-        <img className="max-w-md w-full" src={pics[0].image} />
+        <img className="max-w-md w-full" src={gal?.photos ? modifyPhoto(gal?.photos[0]) : '#'} />
         <div className="flex flex-col text-right items-end h-full  p-4">
           <div className="flex items-center gap-1 justify-end text-lg Tenor-Sans tracking-wide">
-            <h5>LUCÍA Y ÁLVARO</h5>
+            <h5>{gal?.title?.toUpperCase()}</h5>
             <svg
               xmlns="http://www.w3.org/2000/svg"
               width="15"
@@ -28,13 +55,13 @@ function OpenGallery() {
           </div>
 
           <p className="Be-Vietnam-Pro tracking-wide text-base font-light text-[#000000b8] my-3">
-            Lucía Casado Hernández
+            {gal?.client?.name}
           </p>
           <p className="Be-Vietnam-Pro tracking-wide text-base font-light text-[#000000b8] my-3">
-            cristinadelgado@gmail.com
+            {gal?.client?.email}
           </p>
           <p className="Be-Vietnam-Pro tracking-wide text-base font-light text-[#000000b8] my-3">
-            654 89 25 65
+            {gal?.client?.phone}
           </p>
           <div className="w-3/5 Be-Vietnam-Pro  font-light tracking-widest border hover:cursor-pointer rounded-full py-2 px-4 shadow text-center mt-2">
             ENVIAR
@@ -75,12 +102,12 @@ function OpenGallery() {
         className="flex w-auto"
         columnClassName="pl-2 bg-clip-padding"
       >
-        {pics.map((p) => (
-          <div key={p.id}>
+        {gal?.photos?.map((p) => (
+          <div key={p}>
             <img
               className="h-auto w-full border mb-2"
-              src={p.image}
-              alt={p.title}
+              src={modifyPhoto(p)}
+              alt={p}
               loading="lazy"
             />
           </div>
