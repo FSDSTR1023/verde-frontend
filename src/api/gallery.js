@@ -1,6 +1,6 @@
-import { customFetch } from '../helper/customFetch';
+import { customFetch } from "../helper/customFetch.js";
 
-export class Client {
+export class Gallery {
 
     token;
 
@@ -8,19 +8,22 @@ export class Client {
         this.token = localStorage?.getItem('token');
     }
 
-    register = async (data) => {
+    create = async (data) => {
+
         try {
             const response = await customFetch({
-                path: '/client/register',
-                method: 'POST',
                 data,
+                method: 'POST',
+                path: '/gallery/create',
                 token: this.token,
             });
 
             return response;
 
         } catch (error) {
+
             console.trace(error);
+
         }
     }
 

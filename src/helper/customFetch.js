@@ -1,15 +1,20 @@
+export const customFetch = async ({ path, method, data, token }) => {
+  const be = import.meta.env.VITE_BACKEND_URL;
 
-export const customFetch = ({ path, method, data, token }) => {
+  const url = be + path;
 
-    const be = import.meta.env.VITE_BACKEND_URL;
+  const headers = new Headers();
+  headers.append("Content-Type", "application/json");
+  token && headers.append("Authorization", `Bearer ${token}`);
 
-    const url = be + path;
+  const body = data && JSON.stringify(data);
 
-    const headers = new Headers();
-    headers.append('Content-Type', 'application/json');
-    token && headers.append('Authorization', `Bearer ${token}`);
+  try {
+    const response = await fetch(url, { method, headers, body });
+    const data = await response.json();
 
-    const body = data && JSON.stringify(data);
-
-    return fetch(url, { method, headers, body });
-}
+    return data;
+  } catch (error) {
+    console.log(error.message);
+  }
+};

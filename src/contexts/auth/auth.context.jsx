@@ -2,12 +2,20 @@ import { useCallback } from 'react';
 import { useState } from 'react';
 import { createContext } from 'react';
 import { Photographer } from '../../api/photographer';
+import { useEffect } from 'react';
 
 export const AuthContext = createContext();
 
 const AuthProvider = ({ children }) => {
 
   const [isAuth, setIsAuth] = useState(!!localStorage.getItem('token'));
+
+  useEffect(() => {
+
+
+
+  }, [])
+
 
   const register = async (data) => {
 

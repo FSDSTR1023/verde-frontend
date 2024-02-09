@@ -1,9 +1,11 @@
 import { useEffect } from "react";
 import { useState } from "react";
 import { customFetch } from "../helper/customFetch";
+import useAuthContext from "./useAuthContext";
 
 export const useGetClients = () => {
     const [clients, setClients] = useState([]);
+    const { logout } = useAuthContext();
 
     useEffect(() => {
 
@@ -11,16 +13,21 @@ export const useGetClients = () => {
 
         (async () => {
 
-            const clientsResponse = await customFetch({
-                path: '/client/getAll',
-                token
-            })
-            const cr = await clientsResponse.json()
+            try {
 
-            console.log(cr.photographerResponse.clients);
+                const clientsResponse = await customFetch({
+                    path: '/client/getAll',
+                    token
+                })
+                console.log(clientsResponse.photographerResponse.clients);
+                setClients(prev => clientsResponse.photographerResponse.clients);
 
-            setClients(prev => cr.photographerResponse.clients);
+            } catch (error) {
 
+                console.log(error.message);
+                logout();
+
+            }
         })()
 
     }, [])
