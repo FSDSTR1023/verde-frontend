@@ -18,7 +18,14 @@ export const MyDropzone = ({ setPhotos }) => {
 
     }, [])
 
-    const { getRootProps, getInputProps, isDragActive } = useDropzone({ onDrop })
+    const { getRootProps, getInputProps, isDragActive } = useDropzone({
+        onDrop, accept: {
+            'image/png': ['.png'],
+            'image/jpeg': ['.jpeg'],
+            'image/jpg': ['.jpg'],
+
+        }
+    })
 
     return (
 

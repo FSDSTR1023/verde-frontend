@@ -1,8 +1,14 @@
 import React from "react";
 import { Card } from "flowbite-react";
+import { useEffect } from "react";
+import { Client } from "../../api/client";
+import { useState } from "react";
+import { modifyPhoto } from "../../helper/modifyPhoto.js"
+import { PATHS } from "../../routes/paths.js";
+
 const customeTheme = {
   root: {
-    base: "flex rounded-lg border border-gray-200 bg-white shadow-xl  ",
+    base: "flex rounded-lg border border-gray-200 bg-white shadow-xl w-96",
     children: "flex  flex-col justify-center gap-4 p-3",
     horizontal: {
       off: "flex-col",
@@ -13,30 +19,49 @@ const customeTheme = {
   img: {
     base: "",
     horizontal: {
-      off: "rounded-none ",
-      on: "h-96 w-full rounded-none object-cover md:h-auto md:w-48 md:rounded-none md:rounded-l-lg",
+      off: "h-48 w-full rounded-none object-cover",
+      on: "h-96 w-full rounded-none  md:h-auto md:w-48 md:rounded-none md:rounded-l-lg",
     },
   },
 };
 
-function CardGallery() {
+// llamamos a la info dle cliente
+
+function CardGallery({ gallery }) {
+
+  const [client, setClient] = useState({})
+
+  useEffect(() => {
+
+    const client = new Client();
+
+    (async () => {
+      const currenClient = await client.getById(gallery.client);
+      console.log("👉", currenClient);
+      setClient(prev => currenClient);
+    })()
+
+  }, [])
+
+
+
   return (
     <Card
-      className="max-w-sm p-4 "
+      className="max-w-sm p-4"
       theme={customeTheme}
       imgAlt="Imagen"
-      imgSrc="/photos/Portada.png"
+      imgSrc={modifyPhoto(gallery.photos[0])}
     >
       <div className=" Be-Vietnam-Pro flex items-center justify-between">
         <div>
-          <a href="#">
+          <a href={`${PATHS.privates.galleries}/${gallery._id}`}>
             <h5 className="mb-2 mt-2 text-base font-medium tracking-tight text-gray-900 ">
-              ÁLVARO Y LUCÍA
+              {gallery?.title.toUpperCase()}
             </h5>
           </a>
 
-          <p className="font-light text-sm mb-2">Álvaro Castañeda Gómez</p>
-          <p className="font-light text-sm">alvarogomhr@gmail.com</p>
+          <p className="font-light text-sm mb-2">{client.clientResponse?.name} {client.clientResponse?.surname}</p>
+          <p className="font-light text-sm">{client?.clientResponse?.email}</p>
         </div>
 
         <div className="flex items-center">
@@ -53,10 +78,10 @@ function CardGallery() {
               fillOpacity="0.57"
             />
           </svg>
-          <span className="ml-2 font-light text-sm">67</span>
+          <span className="ml-2 font-light text-sm">{gallery.photos.length}</span>
         </div>
       </div>
-    </Card>
+    </Card >
   );
 }
 

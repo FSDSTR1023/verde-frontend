@@ -32,6 +32,7 @@ const AppMainRoute = () => {
         <Route path={PATHS.privates.index} element={<PrivatesRoutes />}>
           <Route index element={<Galleries />} />
           <Route path={PATHS.privates.galleries} element={<Galleries />} />
+          <Route path={`${PATHS.privates.galleries}/:id`} element={<OpenGallery />} />
           <Route path={PATHS.privates.table} element={<TableOfClients />} />
           <Route path={PATHS.privates.clientGallery} element={<ClientGallery />} />
           <Route path={PATHS.privates.openGallery} element={<OpenGallery />} />

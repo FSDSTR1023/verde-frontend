@@ -3,19 +3,34 @@ import CardGallery from "../components/card-gallery/CardGallery";
 import { Fab } from "../components/fab/Fab";
 import AddClient from "../components/add-client-form/AddClient";
 import AddGallery from "../components/add-gallery/AddGallery";
+import { useEffect } from "react";
+import { Gallery } from "../api/gallery";
+import { useState } from "react";
+//llamamos a las galerías
 
 function Galleries() {
+
+  const [galleries, setGalleries] = useState([]);
+
+  useEffect(() => {
+    const gallery = new Gallery();
+
+    (async () => {
+      const galleries = (await gallery.getAll()).galeries;
+      console.log(galleries);
+      setGalleries(prev => galleries);
+    })()
+  }, [])
+
+
   return (
     <div className="relative">
       <div className="flex flex-wrap m-10 gap-10 justify-center">
-        <CardGallery />
-        <CardGallery />
-        <CardGallery />
-        <CardGallery />
-        <CardGallery />
-        <CardGallery />
-        <CardGallery />
-        <CardGallery />
+
+        {
+          galleries?.map(g => <CardGallery key={g._id} gallery={g} />).reverse()
+        }
+
       </div>
       <Fab
         toShow={<AddGallery />}

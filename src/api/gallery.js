@@ -27,4 +27,40 @@ export class Gallery {
         }
     }
 
+    getAll = async () => {
+
+
+        try {
+
+            const galleries = customFetch({
+                path: '/gallery/getAll',
+                token: this.token,
+            })
+
+            return galleries;
+
+        } catch (error) {
+            console.trace(error);
+        }
+
+    }
+
+    getById = async (id) => {
+
+
+        try {
+
+            const gallery = customFetch({
+                path: `/gallery/get/${id}`,
+                token: this.token,
+            })
+
+            return gallery;
+
+        } catch (error) {
+            console.trace(error);
+        }
+
+    }
+
 }

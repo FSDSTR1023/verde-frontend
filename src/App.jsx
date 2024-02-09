@@ -2,8 +2,6 @@
 import "./App.css";
 import AuthProvider from './contexts/auth/auth.context';
 import { MainLayout } from "./layouts/MainLayout";
-import ClientGallery from './pages/ClientGallery';
-import OpenGallery from "./pages/OpenGallery";
 import AppMainRoute from "./routes/AppMainRoute";
 
 function App() {
