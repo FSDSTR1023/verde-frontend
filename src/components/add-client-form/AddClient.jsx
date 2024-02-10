@@ -17,9 +17,8 @@ const AddClient = () => {
 
     const client = new Client();
 
-    const response = await client.register(data);
+    await client.register(data);
 
-    console.log(response);
   };
 
   new Photographer();

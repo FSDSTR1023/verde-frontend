@@ -2,7 +2,8 @@ import { Label } from 'flowbite-react'
 import React, { useCallback } from 'react'
 import { useDropzone } from 'react-dropzone'
 
-export const MyDropzone = ({ setPhotos }) => {
+export const MyDropzone = ({ setPhotos, isLoading }) => {
+
     const onDrop = useCallback(acceptedFiles => {
         // Do something with the files
 
@@ -24,7 +25,9 @@ export const MyDropzone = ({ setPhotos }) => {
             'image/jpeg': ['.jpeg'],
             'image/jpg': ['.jpg'],
 
-        }
+        },
+        disabled: isLoading,
+
     })
 
     return (

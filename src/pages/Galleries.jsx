@@ -1,12 +1,10 @@
 import React from "react";
 import CardGallery from "../components/card-gallery/CardGallery";
 import { Fab } from "../components/fab/Fab";
-import AddClient from "../components/add-client-form/AddClient";
 import AddGallery from "../components/add-gallery/AddGallery";
 import { useEffect } from "react";
 import { Gallery } from "../api/gallery";
 import { useState } from "react";
-//llamamos a las galerías
 
 function Galleries() {
 

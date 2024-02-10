@@ -3,16 +3,28 @@ import { useState } from 'react';
 import { createContext } from 'react';
 import { Photographer } from '../../api/photographer';
 import { useEffect } from 'react';
+import { customFetch } from '../../helper/customFetch';
 
 export const AuthContext = createContext();
 
 const AuthProvider = ({ children }) => {
 
-  const [isAuth, setIsAuth] = useState(!!localStorage.getItem('token'));
+  const [isAuth, setIsAuth] = useState(false);
 
   useEffect(() => {
 
+    (async () => {
 
+      const checked = await customFetch({
+        path: "/check",
+        token: localStorage.getItem('token'),
+      });
+
+      if (checked.ok) {
+        setIsAuth(prev => true);
+      }
+
+    })()
 
   }, [])
 

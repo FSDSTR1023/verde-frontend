@@ -24,7 +24,7 @@ export class Photographer {
 
     } catch (error) {
 
-      console.log(error)
+      console.trace(error)
 
     }
   }
@@ -45,7 +45,7 @@ export class Photographer {
 
     } catch (error) {
 
-      console.log(error);
+      console.trace(error);
 
     }
   }

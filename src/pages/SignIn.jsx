@@ -1,13 +1,8 @@
 import useAuthContext from '../hooks/useAuthContext';
-import { useState } from 'react';
-import { Toast } from 'flowbite-react';
 
 const SigIn = () => {
 
-
   const { register } = useAuthContext()
-
-  const [toast, setToast] = useState(false)
 
   const submitHandle = async (e) => {
 
@@ -33,14 +28,6 @@ const SigIn = () => {
 
   return (
     <div className="  mt-28 max-w-xl  mx-auto xl:max-w-5xl h-full flex bg-white rounded-lg shadow ">
-
-      {/* <Toast>
-        <div className="inline-flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-orange-100 text-orange-500 dark:bg-orange-700 dark:text-orange-200">
-          <HiExclamation className="h-5 w-5" />
-        </div>
-        <div className="ml-3 text-sm font-normal">Improve password difficulty.</div>
-        <Toast.Toggle />
-      </Toast> */}
 
       <div className="min-w-1/2 hidden xl:block">
         <img src="/img/ImagenSigIn.png" className="h-full object-cover" />

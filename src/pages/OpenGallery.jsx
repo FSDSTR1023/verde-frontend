@@ -1,6 +1,4 @@
 import React from "react";
-import SwiperPics from "../components/swiper-pics/SwiperPics";
-import { pics } from "./ClientGallery";
 import Masonry from "react-masonry-css";
 import { ActionBarClient } from "../components/action-bar-client/ActionBarClient";
 import { useParams } from "react-router-dom";

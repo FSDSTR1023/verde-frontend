@@ -25,7 +25,6 @@ export const useGetClients = () => {
             } catch (error) {
 
                 console.log(error.message);
-                logout();
 
             }
         })()
