@@ -77,6 +77,7 @@ export const TableOfClients = () => {
                                 phone={c.phone}
                                 id={c._id}
                             />)
+                                .reverse()
                         }
 
                     </Table.Body>

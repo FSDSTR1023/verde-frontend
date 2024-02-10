@@ -1,7 +1,10 @@
+import { useNavigate } from 'react-router-dom';
 import { Client } from '../../api/client.js';
 import { Photographer } from '../../api/photographer.js'
 
 const AddClient = () => {
+
+  const navigate = useNavigate();
 
   const submitHandle = async (e) => {
     e.preventDefault();
@@ -19,6 +22,7 @@ const AddClient = () => {
 
     await client.register(data);
 
+    navigate(0);
   };
 
   new Photographer();
