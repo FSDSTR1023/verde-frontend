@@ -30,8 +30,6 @@ const AddGallery = () => {
     setIsLoadin((prev) => true);
     const urlPhotoClaud = await urlPhotoC(photos);
 
-    console.log({ urlPhotoClaud });
-
     const data = {
       title: title.value,
       client: client.value,

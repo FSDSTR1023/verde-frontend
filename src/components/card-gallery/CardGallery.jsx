@@ -37,7 +37,6 @@ function CardGallery({ gallery }) {
 
     (async () => {
       const currenClient = await client.getById(gallery.client);
-      console.log("👉", currenClient);
       setClient(prev => currenClient);
     })()
 
@@ -60,7 +59,7 @@ function CardGallery({ gallery }) {
             </h5>
           </a>
 
-          <p className="font-light text-sm mb-2">{client.clientResponse?.name} {client.clientResponse?.surname}</p>
+          <p className="font-light text-sm mb-2">{client?.clientResponse?.name} {client?.clientResponse?.surname}</p>
           <p className="font-light text-sm">{client?.clientResponse?.email}</p>
         </div>
 

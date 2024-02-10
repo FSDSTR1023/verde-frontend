@@ -15,6 +15,6 @@ export const customFetch = async ({ path, method, data, token }) => {
 
     return data;
   } catch (error) {
-    console.log(error.message);
+    console.trace(error.message);
   }
 };

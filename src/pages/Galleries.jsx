@@ -15,7 +15,6 @@ function Galleries() {
 
     (async () => {
       const galleries = (await gallery.getAll()).galeries;
-      console.log(galleries);
       setGalleries(prev => galleries);
     })()
   }, [])

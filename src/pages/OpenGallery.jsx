@@ -11,8 +11,6 @@ function OpenGallery() {
 
   const { id } = useParams();
 
-  console.log("id:", id)
-
   const [gal, setGal] = useState({});
 
   useEffect(() => {
@@ -20,11 +18,7 @@ function OpenGallery() {
     (async () => {
 
       const currentGallery = await gallery.getById(id);
-
-      console.log(" 👍 currentGalery", currentGallery.gallery);
-
       setGal(prev => currentGallery.gallery)
-
 
     })()
   }, [])
