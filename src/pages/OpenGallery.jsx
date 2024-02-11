@@ -61,7 +61,7 @@ function OpenGallery() {
           <p className="Be-Vietnam-Pro tracking-wide text-base font-light text-[#000000b8] my-3">
             {gal?.client?.phone}
           </p>
-          <div className="w-3/5 Be-Vietnam-Pro  font-light tracking-widest border hover:cursor-pointer rounded-full py-2 px-4 shadow text-center mt-2">
+          <div className="Be-Vietnam-Pro  font-light tracking-widest border hover:cursor-pointer rounded-full py-2 px-4 shadow text-center mt-2">
             ENVIAR
           </div>
         </div>
@@ -104,9 +104,9 @@ function OpenGallery() {
       >
         {gal?.photos?.map((p) => (
 
-          <div className="relative">
+          <div key={p} className="relative">
             <input className="absolute right-2 top-2 p-" type="checkbox" />
-            <a key={p} href={modifyPhoto(p, false, 'auto', 'auto:best')} target="_blank">
+            <a href={modifyPhoto(p, false, 'auto', 'auto:best')} target="_blank">
               <img
                 className="h-auto w-full border mb-2"
                 src={modifyPhoto(p)}
