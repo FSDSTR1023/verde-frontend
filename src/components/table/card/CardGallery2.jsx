@@ -9,7 +9,7 @@ import { PATHS } from "../../../routes/paths.js";
 
 const customeTheme = {
     root: {
-        base: "flex rounded-lg border border-gray-200 bg-white shadow-xl min-w-96",
+        base: "flex rounded-lg border border-gray-200 bg-white shadow-xl min-w-64 max-h-52",
         children: "flex  flex-col justify-center gap-4 p-2",
         horizontal: {
             off: "flex-col",
@@ -21,7 +21,7 @@ const customeTheme = {
         base: "",
         horizontal: {
             off: "h-48 w-full rounded-none object-cover",
-            on: "h-96 w-full rounded-none  md:h-auto md:w-48 md:rounded-none md:rounded-l-lg",
+            on: "h-96 w-full rounded-none",
         },
     },
 };
@@ -46,7 +46,7 @@ function CardGallery2({ id }) {
 
     return (
         <Card
-            className="max-w-sm p-4"
+            className="max-w-sm p-4 h-"
             theme={customeTheme}
             imgAlt="Imagen"
             imgSrc={!!gallery?.photos && modifyPhoto(gallery.photos[0])}

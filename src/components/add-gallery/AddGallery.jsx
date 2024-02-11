@@ -86,7 +86,7 @@ const AddGallery = () => {
             <option key={c._id} value={c._id}>
               {c.name} - {c.email}
             </option>
-          ))}
+          )).reverse()}
         </select>
       </div>
 

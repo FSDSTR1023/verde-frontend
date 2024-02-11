@@ -25,7 +25,14 @@ function Galleries() {
       <div className="flex flex-wrap m-10 gap-10 justify-center">
 
         {
-          galleries?.map(g => <CardGallery key={g._id} gallery={g} />).reverse()
+          !!galleries.length
+            ?
+            galleries?.map(g => <CardGallery key={g._id} gallery={g} />).reverse()
+            : <div className="flex items-center h-[80vh]">
+              <h1 className="text-[#C1C1C1] Be-Vietnam-Pro text-xl">
+                Crea tu primera galería...
+              </h1>
+            </div>
         }
 
       </div>

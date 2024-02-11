@@ -23,7 +23,7 @@ const SwiperPics = ({ pics = [] }) => {
             >
 
                 {
-                    pics.map(p => <img className='object-contain rounded-none' key={p.id} src={p.image} alt={p.title} />)
+                    pics.map(p => <img className='object-contain rounded-none' key={p} src={p} alt={p} />)
                 }
 
             </Carousel>

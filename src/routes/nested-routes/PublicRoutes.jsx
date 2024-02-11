@@ -10,7 +10,7 @@ const PublicRoutes = () => {
 
 
   if (isAuth) {
-    return <Navigate to={PATHS.privates} />
+    return <Navigate to={PATHS.privates.galleries} />
   }
 
   return (

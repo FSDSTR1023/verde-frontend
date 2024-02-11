@@ -49,10 +49,25 @@ export class Gallery {
 
 
         try {
-
             const gallery = customFetch({
                 path: `/gallery/get/${id}`,
                 token: this.token,
+            })
+
+            return gallery;
+
+        } catch (error) {
+            console.trace(error);
+        }
+
+    }
+
+    static getByIdClient = async (id) => {
+
+
+        try {
+            const gallery = customFetch({
+                path: `/gallery/get/client/${id}`,
             })
 
             return gallery;

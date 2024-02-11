@@ -1,6 +1,7 @@
 import { useNavigate } from 'react-router-dom';
 import { Client } from '../../api/client.js';
 import { Photographer } from '../../api/photographer.js'
+import { ToastContainer, toast } from 'react-toastify';
 
 const AddClient = () => {
 
@@ -9,6 +10,17 @@ const AddClient = () => {
   const submitHandle = async (e) => {
     e.preventDefault();
     const { name, surname, email, phone, address } = e.target;
+
+    if (
+      !name.value
+      || !surname.value
+      || !email.value
+      || !phone.value
+      || !address.value
+    ) {
+      toast.error("Debes llenar todos los campos");
+      return;
+    }
 
     const data = {
       name: name.value,
@@ -28,6 +40,11 @@ const AddClient = () => {
   new Photographer();
   return (
     <form onSubmit={submitHandle} className="max-w-md mx-auto">
+
+      <ToastContainer
+        position="bottom-center"
+        theme="colored"
+      />
       <h4 className="Tenor-Sans flex justify-center text-3xl text-[#7C7C7C] tracking-widest">
         NUEVO CLIENTE
       </h4>
