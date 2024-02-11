@@ -105,7 +105,7 @@ function OpenGallery() {
         {gal?.photos?.map((p) => (
 
           <div className="relative">
-            <input className="absolute right-2 top-2" type="checkbox" />
+            <input className="absolute right-2 top-2 p-" type="checkbox" />
             <a key={p} href={modifyPhoto(p, false, 'auto', 'auto:best')} target="_blank">
               <img
                 className="h-auto w-full border mb-2"
