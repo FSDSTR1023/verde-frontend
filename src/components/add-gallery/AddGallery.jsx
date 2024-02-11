@@ -18,12 +18,7 @@ const AddGallery = () => {
 
     const { title, client, minPics, totalPrice } = e.target;
 
-    if (
-      !title.value
-      || !client.value
-      || !minPics.value
-      || !totalPrice.value
-    ) {
+    if (!title.value || !client.value || !minPics.value || !totalPrice.value) {
       return;
     }
 
@@ -41,7 +36,7 @@ const AddGallery = () => {
     const gallery = new Gallery();
     await gallery.create(data);
     setIsLoadin((prev) => false);
-    navigate(0);
+    //navigate(0);
   };
 
   const deletePhoto = (path) => {
@@ -81,12 +76,14 @@ const AddGallery = () => {
           id="client"
           className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5 mt-4"
         >
-          <option value=''>Clientes</option>
-          {clients.map((c) => (
-            <option key={c._id} value={c._id}>
-              {c.name} - {c.email}
-            </option>
-          )).reverse()}
+          <option value="">Clientes</option>
+          {clients
+            .map((c) => (
+              <option key={c._id} value={c._id}>
+                {c.name} - {c.email}
+              </option>
+            ))
+            .reverse()}
         </select>
       </div>
 
@@ -132,15 +129,19 @@ const AddGallery = () => {
         IMÁGENES
       </h5>
 
-      <MyDropzone setPhotos={setPhotos} currentPhotos={photos} isLoading={isLoading} />
+      <MyDropzone
+        setPhotos={setPhotos}
+        currentPhotos={photos}
+        isLoading={isLoading}
+      />
 
       {!!photos && (
         <ul className="max-h-28 overflow-auto">
           {photos.reverse().map((ph) => (
             <li className="m-1 p-2 flex gap-2 items-center" key={ph.path}>
               📸 - {ph.name}
-              {
-                isLoading || <svg
+              {isLoading || (
+                <svg
                   className="cursor-pointer text-[#7C7C7C] font-extrabold text-xl Tenor-Sans items-center w-6 h-6"
                   onClick={() => deletePhoto(ph.path)}
                   xmlns="http://www.w3.org/2000/svg"
@@ -155,7 +156,7 @@ const AddGallery = () => {
                     d="m9.75 9.75 4.5 4.5m0-4.5-4.5 4.5M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"
                   />
                 </svg>
-              }
+              )}
             </li>
           ))}
         </ul>
@@ -167,7 +168,6 @@ const AddGallery = () => {
         <button
           type="submit"
           className=" w-full text-white bg-[#D9D9D9] hover:bg-[#C7C7C7] focus:ring-4 focus:outline-none  font-medium rounded-lg text-base my-7 px-5 py-2.5 text-center "
-
         >
           CREAR
         </button>
