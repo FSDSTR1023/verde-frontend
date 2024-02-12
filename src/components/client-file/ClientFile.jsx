@@ -1,17 +1,30 @@
 import React from 'react'
+import { Client } from '../../api/client';
+import { useEffect } from 'react';
+import { useState } from 'react';
+import CardGallery2 from '../table/card/CardGallery2';
 
-const ClientFile = () => {
+const ClientFile = ({ id }) => {
+
+    const [client, setClient] = useState([]);
+
+    useEffect(() => {
+        const clientInstance = new Client();
+        (async () => {
+            const clientResponse = await clientInstance.getById(id);
+            setClient(prev => clientResponse.clientResponse);
+            // setClient(clients.photographerResponse.clients);
+        })()
+
+    }, [])
+
+
     return (
         <div className="flex justify-center w-full max-w rounded-b relative overflow-visible">
-
             <div className='w-full flex flex-col justify-center items-center' >
-
                 <div className='flex flex-col w-4/5' >
-
                     <div className='flex flex-col gap-10 md:flex-row md:gap-0 justify-between'>
-
                         <div className='flex flex-col' >
-
                             <span className='flex gap-2 items-center' >
 
                                 <p className='text-xl text-left Tenor-Sans py-5'>
@@ -23,15 +36,15 @@ const ClientFile = () => {
                             </span>
 
                             <p className='mt-2 font-light Be-Vietnam-Pro text-[#000000b8]' >
-                                Lucía Casado Hernández
+                                {client?.name}
                             </p>
 
                             <p className='mt-2 font-light Be-Vietnam-Pro text-[#000000b8]' >
-                                cristinadelgado@gmail.com
+                                {client?.email}
                             </p>
 
                             <p className='mt-2 font-light Be-Vietnam-Pro text-[#000000b8]' >
-                                654 89 25 65
+                                {client?.phone}
                             </p>
 
                         </div>
@@ -46,33 +59,28 @@ const ClientFile = () => {
                             </span>
 
                             <p className='mt-2 font-light Be-Vietnam-Pro text-[#000000b8]' >
-                                C/Juan Luis Peralta nº 1 4ºD
-                            </p>
-                            <p className='mt-2 font-light Be-Vietnam-Pro text-[#000000b8]' >
-                                41006, Sevilla
+                                {client?.address}
                             </p>
 
                         </div>
                     </div>
 
-                    <p className='text-xl Tenor-Sans text-center mt-16 mb-12' variant="h6" textAlign='center' fontFamily='Tenor Sans' color='#7C7C7C' mt={5} >
+                    <p className='text-xl Tenor-Sans text-center mt-16 mb-12' variant="h6" textalign='center' fontFamily='Tenor Sans' color='#7C7C7C' mt={5} >
                         GALERÍAS
                     </p>
 
                     <div className='flex flex-nowrap overflow-auto w-full gap-1 px-5 py-1 overflow-x-scroll'>
 
-                        <div className='flex justify-center items-center bg-slate-600 rounded min-w-56 min-h-56 text-white'>
+                        {/* <div className='flex justify-center items-center bg-slate-600 rounded min-w-56 min-h-56 text-white'>
                             <span>Card de una galería</span>
-                        </div>
-                        <div className='flex justify-center items-center bg-slate-600 rounded min-w-56 min-h-56 text-white'>
-                            <span>Card de una galería</span>
-                        </div>
-                        <div className='flex justify-center items-center bg-slate-600 rounded min-w-56 min-h-56 text-white'>
-                            <span>Card de una galería</span>
-                        </div>
-                        <div className='flex justify-center items-center bg-slate-600 rounded min-w-56 min-h-56 text-white'>
-                            <span>Card de una galería</span>
-                        </div>
+                        </div> */}
+
+                        {
+                            client?.gallery?.map(id => <CardGallery2 id={id} key={id} />)
+
+                        }
+
+
 
                     </div>
                 </div>

@@ -2,6 +2,10 @@ import { Checkbox, Table } from 'flowbite-react';
 import Row from './row/Row';
 import { Fab } from '../fab/Fab';
 import AddClient from '../add-client-form/AddClient';
+import { useEffect } from 'react';
+import { customFetch } from '../../helper/customFetch';
+import { Client } from '../../api/client';
+import { useState } from 'react';
 
 const customTheme = {
     "root": {
@@ -30,6 +34,19 @@ const customTheme = {
 
 
 export const TableOfClients = () => {
+
+    const [client, setClient] = useState([]);
+
+    useEffect(() => {
+        const client = new Client();
+        (async () => {
+            const clients = await client.getAll();
+            setClient(clients.photographerResponse.clients);
+        })()
+
+    }, [])
+
+
     return (
         <div className='flex justify-center gap-2 py-12 rounded-b'>
             <div className="w-4/5 max-w rounded-b relative overflow-visible">
@@ -38,7 +55,6 @@ export const TableOfClients = () => {
                     hoverable
                     theme={customTheme}
                     className='bg-violet-300'
-                // className='w-4/5'
                 >
                     <Table.Head>
                         <Table.HeadCell className="p-4">
@@ -53,11 +69,16 @@ export const TableOfClients = () => {
                     </Table.Head>
                     <Table.Body className="divide-y">
 
-                        <Row name={'pepe'} email={'pepe@hotmail.com'} phone={'654654654'} />
-                        <Row name={'pepe'} email={'pepe@hotmail.com'} phone={'654654654'} />
-                        <Row name={'pepe'} email={'pepe@hotmail.com'} phone={'654654654'} />
-                        <Row name={'pepe'} email={'pepe@hotmail.com'} phone={'654654654'} />
-                        <Row name={'pepe'} email={'pepe@hotmail.com'} phone={'654654654'} />
+                        {
+                            client.map(c => <Row
+                                key={c._id}
+                                name={c.name}
+                                email={c.email}
+                                phone={c.phone}
+                                id={c._id}
+                            />)
+                                .reverse()
+                        }
 
                     </Table.Body>
                 </Table>

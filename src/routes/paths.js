@@ -1,5 +1,6 @@
 export const PATHS = {
   index: '/',
+  client: '/client/:photographerId/:clientId/:galleryId',
   publics: {
     index: '/publics',
     login: '/publics/login',

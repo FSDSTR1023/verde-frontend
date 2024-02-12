@@ -1,6 +1,4 @@
 import React from "react";
-import SwiperPics from "../components/swiper-pics/SwiperPics";
-import { pics } from "./ClientGallery";
 import Masonry from "react-masonry-css";
 import { ActionBarClient } from "../components/action-bar-client/ActionBarClient";
 import { useParams } from "react-router-dom";
@@ -8,12 +6,11 @@ import { useEffect } from "react";
 import { Gallery } from "../api/gallery";
 import { useState } from "react";
 import { modifyPhoto } from "../helper/modifyPhoto";
+import { Fab } from "../components/fab/Fab";
 
 function OpenGallery() {
 
   const { id } = useParams();
-
-  console.log("id:", id)
 
   const [gal, setGal] = useState({});
 
@@ -22,11 +19,7 @@ function OpenGallery() {
     (async () => {
 
       const currentGallery = await gallery.getById(id);
-
-      console.log(" 👍 currentGalery", currentGallery.gallery);
-
       setGal(prev => currentGallery.gallery)
-
 
     })()
   }, [])
@@ -35,7 +28,12 @@ function OpenGallery() {
   return (
     <div>
       <div className="flex justify-between p-10 items-center flex-wrap">
-        <img className="max-w-md w-full" src={gal?.photos ? modifyPhoto(gal?.photos[0]) : '#'} />
+        <a href={gal?.photos ? modifyPhoto(gal?.photos[0], false, 'auto', 'auto:best') : '#'} target="_blank" rel="noopener noreferrer">
+
+          <img className="max-w-md w-full" src={gal?.photos ? modifyPhoto(gal?.photos[0]) : '#'} />
+
+        </a>
+
         <div className="flex flex-col text-right items-end h-full  p-4">
           <div className="flex items-center gap-1 justify-end text-lg Tenor-Sans tracking-wide">
             <h5>{gal?.title?.toUpperCase()}</h5>
@@ -63,7 +61,7 @@ function OpenGallery() {
           <p className="Be-Vietnam-Pro tracking-wide text-base font-light text-[#000000b8] my-3">
             {gal?.client?.phone}
           </p>
-          <div className="w-3/5 Be-Vietnam-Pro  font-light tracking-widest border hover:cursor-pointer rounded-full py-2 px-4 shadow text-center mt-2">
+          <div className="Be-Vietnam-Pro  font-light tracking-widest border hover:cursor-pointer rounded-full py-2 px-4 shadow text-center mt-2">
             ENVIAR
           </div>
         </div>
@@ -76,9 +74,11 @@ function OpenGallery() {
         right={[
           {
             id: 'clientView',
-            IconOrButton: <svg xmlns="http://www.w3.org/2000/svg" width="18" height="17" viewBox="0 0 18 17" fill="none">
-              <path d="M9.00005 6.21311C10.6569 6.21311 12 7.44882 12 8.97309C12 10.4974 10.6569 11.7331 9.00005 11.7331C7.34317 11.7331 6.00002 10.4974 6.00002 8.97309C6.00002 7.44882 7.34317 6.21311 9.00005 6.21311ZM9.00005 7.2481C7.96452 7.2481 7.12502 8.02041 7.12502 8.97309C7.12502 9.92578 7.96452 10.6981 9.00005 10.6981C10.0356 10.6981 10.875 9.92578 10.875 8.97309C10.875 8.02041 10.0356 7.2481 9.00005 7.2481ZM9.00005 3.79492C12.4602 3.79492 15.4471 5.96843 16.2759 9.01436C16.3513 9.2916 16.1682 9.57264 15.8668 9.64205C15.5654 9.7114 15.26 9.54297 15.1845 9.26566C14.4804 6.67771 11.941 4.82992 9.00005 4.82992C6.05773 4.82992 3.5176 6.6793 2.81467 9.26883C2.7394 9.54607 2.43404 9.71471 2.13264 9.6455C1.83124 9.57622 1.64792 9.29533 1.72319 9.01801C2.55051 5.9703 5.53839 3.79492 9.00005 3.79492Z" fill="#7C7C7C" />
-            </svg>
+            IconOrButton: <a href={`/client/x/x/${id}`}>
+              <svg xmlns="http://www.w3.org/2000/svg" width="18" height="17" viewBox="0 0 18 17" fill="none">
+                <path d="M9.00005 6.21311C10.6569 6.21311 12 7.44882 12 8.97309C12 10.4974 10.6569 11.7331 9.00005 11.7331C7.34317 11.7331 6.00002 10.4974 6.00002 8.97309C6.00002 7.44882 7.34317 6.21311 9.00005 6.21311ZM9.00005 7.2481C7.96452 7.2481 7.12502 8.02041 7.12502 8.97309C7.12502 9.92578 7.96452 10.6981 9.00005 10.6981C10.0356 10.6981 10.875 9.92578 10.875 8.97309C10.875 8.02041 10.0356 7.2481 9.00005 7.2481ZM9.00005 3.79492C12.4602 3.79492 15.4471 5.96843 16.2759 9.01436C16.3513 9.2916 16.1682 9.57264 15.8668 9.64205C15.5654 9.7114 15.26 9.54297 15.1845 9.26566C14.4804 6.67771 11.941 4.82992 9.00005 4.82992C6.05773 4.82992 3.5176 6.6793 2.81467 9.26883C2.7394 9.54607 2.43404 9.71471 2.13264 9.6455C1.83124 9.57622 1.64792 9.29533 1.72319 9.01801C2.55051 5.9703 5.53839 3.79492 9.00005 3.79492Z" fill="#7C7C7C" />
+              </svg>
+            </a>
           },
           {
             id: 'addPic',
@@ -98,19 +98,25 @@ function OpenGallery() {
       />
 
       <Masonry
-        breakpointCols={4}
+        breakpointCols={5}
         className="flex w-auto"
         columnClassName="pl-2 bg-clip-padding"
       >
         {gal?.photos?.map((p) => (
-          <div key={p}>
-            <img
-              className="h-auto w-full border mb-2"
-              src={modifyPhoto(p)}
-              alt={p}
-              loading="lazy"
-            />
+
+          <div key={p} className="relative">
+            <input className="absolute right-2 top-2 p-" type="checkbox" />
+            <a href={modifyPhoto(p, false, 'auto', 'auto:best')} target="_blank">
+              <img
+                className="h-auto w-full border mb-2"
+                src={modifyPhoto(p)}
+                alt={p}
+                loading="lazy"
+              />
+            </a>
+
           </div>
+
         ))}
       </Masonry>
     </div>

@@ -1,12 +1,10 @@
 import React from "react";
 import CardGallery from "../components/card-gallery/CardGallery";
 import { Fab } from "../components/fab/Fab";
-import AddClient from "../components/add-client-form/AddClient";
 import AddGallery from "../components/add-gallery/AddGallery";
 import { useEffect } from "react";
 import { Gallery } from "../api/gallery";
 import { useState } from "react";
-//llamamos a las galerías
 
 function Galleries() {
 
@@ -17,7 +15,6 @@ function Galleries() {
 
     (async () => {
       const galleries = (await gallery.getAll()).galeries;
-      console.log(galleries);
       setGalleries(prev => galleries);
     })()
   }, [])
@@ -28,7 +25,14 @@ function Galleries() {
       <div className="flex flex-wrap m-10 gap-10 justify-center">
 
         {
-          galleries?.map(g => <CardGallery key={g._id} gallery={g} />).reverse()
+          !!galleries.length
+            ?
+            galleries?.map(g => <CardGallery key={g._id} gallery={g} />).reverse()
+            : <div className="flex items-center h-[80vh]">
+              <h1 className="text-[#C1C1C1] Be-Vietnam-Pro text-xl">
+                Crea tu primera galería...
+              </h1>
+            </div>
         }
 
       </div>

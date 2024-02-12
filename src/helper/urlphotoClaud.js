@@ -1,25 +1,28 @@
 export async function urlPhotoC(photos) {
-  const urlphotoCloud = [];
   const myData = new FormData();
+  const promises = [];
 
   for (let i = 0; i < photos.length; i++) {
+
     let file = photos[i];
+
     myData.append("file", file);
     myData.append("upload_preset", import.meta.env.VITE_CLOUDINARY_PRESET);
 
-    const response = await fetch(
+    const response = fetch(
       "https://api.cloudinary.com/v1_1/" +
-        import.meta.env.VITE_CLOUDINARY_NAME +
-        "/image/upload",
+      import.meta.env.VITE_CLOUDINARY_NAME +
+      "/image/upload",
       {
         method: "POST",
         body: myData,
       }
-    );
+    )
+      .then(response => response.json())
+      .then(data => data.secure_url);
 
-    const r = await response.json();
-    urlphotoCloud.push(r.secure_url);
-    console.log("📢 r", r);
+    promises.push(response);
   }
-  return urlphotoCloud;
+
+  return await Promise.all(promises);
 }

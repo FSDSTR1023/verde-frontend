@@ -24,6 +24,19 @@ export class Client {
         }
     }
 
+    getAll = async () => {
+        try {
+            const response = await customFetch({
+                path: "/client/getAll",
+                token: this.token,
+            })
+
+            return response;
+        } catch (error) {
+            console.trace(error);
+        }
+    }
+
     getById = async (id) => {
         try {
             const response = await customFetch({

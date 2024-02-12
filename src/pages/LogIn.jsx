@@ -1,13 +1,9 @@
 import React from "react";
-import { useContext } from 'react';
-import AuthProvider, { AuthContext } from '../contexts/auth/auth.context';
 import useAuthContext from '../hooks/useAuthContext';
 
 const LogIn = () => {
 
-  const { isAuth, login } = useAuthContext();
-
-  console.log("🚨", { isAuth, login });
+  const { login } = useAuthContext();
 
   const submitHandle = async (e) => {
 

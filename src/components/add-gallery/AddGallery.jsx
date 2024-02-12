@@ -5,51 +5,49 @@ import { useGetClients } from "../../hooks/useGetClients.js";
 import { Gallery } from "../../api/gallery.js";
 import { urlPhotoC } from "../../helper/urlphotoClaud.js";
 import LoadingButon from "../loadingButton/loadingButon.jsx";
-import { Navigate } from "react-router-dom";
-import { PATHS } from "../../routes/paths.js";
 import { useNavigate } from "react-router-dom";
 
 const AddGallery = () => {
   const [photos, setPhotos] = useState([]);
   const [isLoading, setIsLoadin] = useState(false);
-
-  const navigate = useNavigate();
-
   const { clients } = useGetClients([]);
+  const navigate = useNavigate();
 
   const SubmitHandel = async (e) => {
     e.preventDefault();
 
-    setIsLoadin((prev) => true);
+    const { title, client, minPics, totalPrice } = e.target;
 
+    if (
+      !title.value
+      || !client.value
+      || !minPics.value
+      || !totalPrice.value
+    ) {
+      return;
+    }
+
+    setIsLoadin((prev) => true);
     const urlPhotoClaud = await urlPhotoC(photos);
 
-    const { title, client, minPics, totalPrice } = e.target;
+    const photosToBack = urlPhotoClaud.map(url => url ?? "https://res.cloudinary.com/ddre5ln9t/image/upload/v1707667398/bmdngs4qqtk1cgiqq03x.png");
 
     const data = {
       title: title.value,
       client: client.value,
       minPics: minPics.value,
       totalPrice: totalPrice.value,
-      photos: urlPhotoClaud,
+      photos: photosToBack,
     };
 
-    console.log("esto va a nuestro BE:", data);
-
     const gallery = new Gallery();
-
-    const created = await gallery.create(data);
-
-    console.log(created);
-
+    await gallery.create(data);
     setIsLoadin((prev) => false);
-
     navigate(0);
   };
 
   const deletePhoto = (path) => {
     const newArr = photos.filter((ph) => ph.path !== path);
-
     setPhotos((prev) => newArr);
   };
 
@@ -59,6 +57,7 @@ const AddGallery = () => {
 
       <div className="relative z-0 w-full my-2 group ">
         <input
+          disabled={isLoading}
           type="text"
           name="title"
           id="title"
@@ -79,15 +78,17 @@ const AddGallery = () => {
         </label>
 
         <select
+          disabled={isLoading}
+          required
           id="client"
           className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5 mt-4"
         >
-          <option>Clientes</option>
+          <option value=''>Clientes</option>
           {clients.map((c) => (
             <option key={c._id} value={c._id}>
               {c.name} - {c.email}
             </option>
-          ))}
+          )).reverse()}
         </select>
       </div>
 
@@ -97,6 +98,7 @@ const AddGallery = () => {
 
       <div className="relative z-0 w-full my-2 group bg">
         <input
+          disabled={isLoading}
           type="number"
           name="minPics"
           id="minPics"
@@ -113,6 +115,7 @@ const AddGallery = () => {
 
       <div className="relative z-0 w-full my-2 group bg">
         <input
+          disabled={isLoading}
           type="number"
           name="totalPrice"
           id="totalPrice"
@@ -131,28 +134,30 @@ const AddGallery = () => {
         IMÁGENES
       </h5>
 
-      <MyDropzone setPhotos={setPhotos} currentPhotos={photos} />
+      <MyDropzone setPhotos={setPhotos} currentPhotos={photos} isLoading={isLoading} />
 
       {!!photos && (
         <ul className="max-h-28 overflow-auto">
           {photos.reverse().map((ph) => (
             <li className="m-1 p-2 flex gap-2 items-center" key={ph.path}>
               📸 - {ph.name}
-              <svg
-                className="cursor-pointer text-[#7C7C7C] font-extrabold text-xl Tenor-Sans items-center w-6 h-6"
-                onClick={() => deletePhoto(ph.path)}
-                xmlns="http://www.w3.org/2000/svg"
-                fill="none"
-                viewBox="0 0 24 24"
-                strokeWidth="1.5"
-                stroke="#7C7C7C"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  d="m9.75 9.75 4.5 4.5m0-4.5-4.5 4.5M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"
-                />
-              </svg>
+              {
+                isLoading || <svg
+                  className="cursor-pointer text-[#7C7C7C] font-extrabold text-xl Tenor-Sans items-center w-6 h-6"
+                  onClick={() => deletePhoto(ph.path)}
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  strokeWidth="1.5"
+                  stroke="#7C7C7C"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    d="m9.75 9.75 4.5 4.5m0-4.5-4.5 4.5M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"
+                  />
+                </svg>
+              }
             </li>
           ))}
         </ul>
@@ -164,6 +169,7 @@ const AddGallery = () => {
         <button
           type="submit"
           className=" w-full text-white bg-[#D9D9D9] hover:bg-[#C7C7C7] focus:ring-4 focus:outline-none  font-medium rounded-lg text-base my-7 px-5 py-2.5 text-center "
+
         >
           CREAR
         </button>
@@ -173,3 +179,5 @@ const AddGallery = () => {
 };
 
 export default AddGallery;
+
+//

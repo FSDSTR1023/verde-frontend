@@ -15,8 +15,6 @@ export const NewGallery = () => {
       priceFullGallery: dataForm.get("priceFullGallery"),
       files: dataForm.get("files"),
     };
-
-    console.log({ data });
   };
 
   return (

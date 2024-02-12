@@ -1,13 +1,12 @@
 import useAuthContext from '../hooks/useAuthContext';
-import { useState } from 'react';
-import { Toast } from 'flowbite-react';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const SigIn = () => {
 
-
   const { register } = useAuthContext()
 
-  const [toast, setToast] = useState(false)
+
 
   const submitHandle = async (e) => {
 
@@ -15,10 +14,10 @@ const SigIn = () => {
 
     const { name, surname, email, password, repassword } = e.target;
 
-    // if (password !== repassword) {
-    //   console.log('Las contraseñas no son iguales');
-    //   return
-    // }
+    if (password.value !== repassword.value) {
+      toast.error("Las constraseñas no son iguales");
+      return;
+    }
 
     const data = {
       name: name.value,
@@ -34,13 +33,10 @@ const SigIn = () => {
   return (
     <div className="  mt-28 max-w-xl  mx-auto xl:max-w-5xl h-full flex bg-white rounded-lg shadow ">
 
-      {/* <Toast>
-        <div className="inline-flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-orange-100 text-orange-500 dark:bg-orange-700 dark:text-orange-200">
-          <HiExclamation className="h-5 w-5" />
-        </div>
-        <div className="ml-3 text-sm font-normal">Improve password difficulty.</div>
-        <Toast.Toggle />
-      </Toast> */}
+      <ToastContainer
+        position="bottom-center"
+        theme="colored"
+      />
 
       <div className="min-w-1/2 hidden xl:block">
         <img src="/img/ImagenSigIn.png" className="h-full object-cover" />
@@ -51,6 +47,7 @@ const SigIn = () => {
           <h4 className="Tenor-Sans  flex justify-center items-center text-3xl text-[#595959] tracking-widest">
             SIGN IN
           </h4>
+
 
           <div className="relative z-0 w-full my-5 group ">
             <input
