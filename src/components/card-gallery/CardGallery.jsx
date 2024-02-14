@@ -25,7 +25,6 @@ const customeTheme = {
   },
 };
 
-// llamamos a la info dle cliente
 
 function CardGallery({ gallery }) {
 
