@@ -32,7 +32,7 @@ const ClientGallery = () => {
   return (
     <div className="h-screen overflow-y-scroll bg-[#F5F5F5]">
       {
-        photos.length && <SwiperPics pics={photos} objectFit="contain" />
+        photos.length ? <SwiperPics pics={photos} objectFit="contain" /> : ''
       }
       <ActionBarClient
         left={[

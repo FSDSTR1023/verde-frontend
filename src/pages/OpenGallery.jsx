@@ -7,19 +7,51 @@ import { Gallery } from "../api/gallery";
 import { useState } from "react";
 import { modifyPhoto } from "../helper/modifyPhoto";
 import { Fab } from "../components/fab/Fab";
+import { useRef } from "react";
+import { useNavigate } from "react-router-dom";
+import AddGallery from "../components/add-gallery/AddGallery";
+import EdithPhotos from "../components/edit-photos/EditPhotos";
 
 function OpenGallery() {
   const { id } = useParams();
 
+  const navigate = useNavigate();
+
   const [gal, setGal] = useState({});
+  const [newGal, setNewGal] = useState([]);
 
   useEffect(() => {
     const gallery = new Gallery();
     (async () => {
       const currentGallery = await gallery.getById(id);
       setGal((prev) => currentGallery.gallery);
+      setNewGal((prev) => currentGallery.gallery.photos);
     })();
   }, []);
+
+  const checkHandel = (e, p) => {
+    if (!e.target.checked) {
+      setNewGal((prev) => [...prev, p]);
+      return;
+    }
+
+    if (e.target.checked) {
+      const newArray = newGal.filter((elem) => elem !== p);
+      setNewGal((prev) => newArray);
+    }
+  };
+
+  const deleteElem = async () => {
+    const gallery = new Gallery();
+
+    const newGallery = await gallery.deletePhotos(id, { newGal });
+
+    console.log(newGallery);
+
+    navigate(0);
+  };
+
+  // console.log(newGal);
 
   return (
     <div>
@@ -35,7 +67,11 @@ function OpenGallery() {
         >
           <img
             className="max-w-md w-full"
-            src={gal?.photos ? modifyPhoto(gal?.photos[0]) : "#"}
+            src={
+              gal?.photos?.length > 0
+                ? modifyPhoto(gal?.photos[0])
+                : "/blanco.png"
+            }
           />
         </a>
 
@@ -66,7 +102,7 @@ function OpenGallery() {
           <p className="Be-Vietnam-Pro tracking-wide text-base font-light text-[#000000b8] my-3">
             {gal?.client?.phone}
           </p>
-          <div className="Be-Vietnam-Pro font-light tracking-widest border hover:cursor-pointer rounded-full py-2 px-4 shadow text-center mt-2">
+          <div className="Be-Vietnam-Pro  font-light tracking-widest border hover:cursor-pointer rounded-full py-2 px-4 shadow text-center mt-2">
             ENVIAR
           </div>
         </div>
@@ -98,25 +134,31 @@ function OpenGallery() {
           {
             id: "addPic",
             IconOrButton: (
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                width="15"
-                height="15"
-                viewBox="0 0 15 15"
-                fill="none"
-              >
-                <path
-                  d="M7.49704 0C7.82246 0 8.09149 0.226558 8.13408 0.520646L8.13999 0.602405L8.14102 6.42693H14.3572C14.7122 6.42693 15 6.6967 15 7.02946C15 7.3345 14.7581 7.58659 14.4445 7.62652L14.3572 7.63198H8.14102L8.14274 13.4557C8.14282 13.7884 7.85511 14.0584 7.50013 14.0584C7.17471 14.0584 6.90569 13.8318 6.86309 13.5377L6.85718 13.4559L6.85546 7.63198H0.64278C0.287777 7.63198 0 7.36221 0 7.02946C0 6.72442 0.241814 6.47232 0.555559 6.4324L0.64278 6.42693H6.85546L6.85443 0.602646C6.85435 0.269883 7.14206 0 7.49704 0Z"
-                  fill="#7C7C7C"
-                />
-              </svg>
+              <Fab
+                icon={
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="15"
+                    height="15"
+                    viewBox="0 0 15 15"
+                    fill="none"
+                  >
+                    <path
+                      d="M7.49704 0C7.82246 0 8.09149 0.226558 8.13408 0.520646L8.13999 0.602405L8.14102 6.42693H14.3572C14.7122 6.42693 15 6.6967 15 7.02946C15 7.3345 14.7581 7.58659 14.4445 7.62652L14.3572 7.63198H8.14102L8.14274 13.4557C8.14282 13.7884 7.85511 14.0584 7.50013 14.0584C7.17471 14.0584 6.90569 13.8318 6.86309 13.5377L6.85718 13.4559L6.85546 7.63198H0.64278C0.287777 7.63198 0 7.36221 0 7.02946C0 6.72442 0.241814 6.47232 0.555559 6.4324L0.64278 6.42693H6.85546L6.85443 0.602646C6.85435 0.269883 7.14206 0 7.49704 0Z"
+                      fill="#7C7C7C"
+                    />
+                  </svg>
+                }
+                toShow={<EdithPhotos id={id} />}
+              />
             ),
           },
           {
             id: "deletePic",
             IconOrButton: (
               <svg
-                className="ml-10"
+                onClick={deleteElem}
+                className="ml-10 cursor-pointer"
                 xmlns="http://www.w3.org/2000/svg"
                 width="15"
                 height="15"
@@ -133,6 +175,8 @@ function OpenGallery() {
         ]}
       />
 
+      {/* <input className="hidden" type="file" name="myInput" id="myInput" accept="image/png, image/jpeg, image/jpg" multiple onInput={(e) => console.log(e)} /> */}
+
       <Masonry
         breakpointCols={5}
         className="flex w-auto"
@@ -140,7 +184,11 @@ function OpenGallery() {
       >
         {gal?.photos?.map((p) => (
           <div key={p} className="relative">
-            <input className="absolute right-2 top-2 p-" type="checkbox" />
+            <input
+              className="absolute right-2 top-2 size-5"
+              type="checkbox"
+              onChange={(e) => checkHandel(e, p)}
+            />
             <a
               href={modifyPhoto(p, false, "auto", "auto:best")}
               target="_blank"

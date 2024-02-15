@@ -78,4 +78,42 @@ export class Gallery {
 
     }
 
+    deletePhotos = async (id, data) => {
+
+
+        try {
+            const gallery = customFetch({
+                path: `/gallery/delete/${id}`,
+                method: 'PUT',
+                token: this.token,
+                data: data
+            })
+
+            return gallery;
+
+        } catch (error) {
+            console.trace(error);
+        }
+
+    }
+
+    addPhoto = async (id, data) => {
+
+
+        try {
+            const gallery = customFetch({
+                path: `/gallery/add/${id}`,
+                method: 'PUT',
+                token: this.token,
+                data: data
+            })
+
+            return gallery;
+
+        } catch (error) {
+            console.trace(error);
+        }
+
+    }
+
 }

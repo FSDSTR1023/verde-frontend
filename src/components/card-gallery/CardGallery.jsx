@@ -25,7 +25,6 @@ const customeTheme = {
   },
 };
 
-// llamamos a la info dle cliente
 
 function CardGallery({ gallery }) {
 
@@ -46,7 +45,7 @@ function CardGallery({ gallery }) {
 
   return (
     <Card
-      className="max-w-sm p-4"
+      className="max-w-sm p-4 relative"
       theme={customeTheme}
       imgAlt="Imagen"
       imgSrc={modifyPhoto(gallery.photos[0])}
@@ -79,7 +78,9 @@ function CardGallery({ gallery }) {
           </svg>
           <span className="ml-2 font-light text-sm">{gallery.photos.length}</span>
         </div>
+
       </div>
+      <input className="absolute right-7 bottom-7 size-5" type="checkbox" name="" id="" />
     </Card >
   );
 }

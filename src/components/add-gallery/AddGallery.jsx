@@ -31,6 +31,12 @@ const AddGallery = () => {
         "https://res.cloudinary.com/ddre5ln9t/image/upload/v1707667398/bmdngs4qqtk1cgiqq03x.png"
     );
 
+    const photosToBack = urlPhotoClaud.map(
+      (url) =>
+        url ??
+        "https://res.cloudinary.com/ddre5ln9t/image/upload/v1707667398/bmdngs4qqtk1cgiqq03x.png"
+    );
+
     const data = {
       title: title.value,
       client: client.value,
