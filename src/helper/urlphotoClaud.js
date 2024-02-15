@@ -3,7 +3,6 @@ export async function urlPhotoC(photos) {
   const promises = [];
 
   for (let i = 0; i < photos.length; i++) {
-
     let file = photos[i];
 
     myData.append("file", file);
@@ -11,15 +10,15 @@ export async function urlPhotoC(photos) {
 
     const response = fetch(
       "https://api.cloudinary.com/v1_1/" +
-      import.meta.env.VITE_CLOUDINARY_NAME +
-      "/image/upload",
+        import.meta.env.VITE_CLOUDINARY_NAME +
+        "/image/upload",
       {
         method: "POST",
         body: myData,
       }
     )
-      .then(response => response.json())
-      .then(data => data.secure_url);
+      .then((response) => response.json())
+      .then((data) => data.secure_url);
 
     promises.push(response);
   }

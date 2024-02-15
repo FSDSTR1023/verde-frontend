@@ -42,7 +42,7 @@ const AddGallery = () => {
     const gallery = new Gallery();
     await gallery.create(data);
     setIsLoadin((prev) => false);
-    navigate(0);
+    //navigate(0);
   };
 
   const deletePhoto = (path) => {
