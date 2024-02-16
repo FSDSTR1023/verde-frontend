@@ -4,7 +4,7 @@ export async function urlPhotoC(photos) {
 
   for (let i = 0; i < photos.length; i++) {
 
-    let file = photos[i];
+    const file = photos[i];
 
     myData.append("file", file);
     myData.append("upload_preset", import.meta.env.VITE_CLOUDINARY_PRESET);

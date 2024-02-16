@@ -36,7 +36,7 @@ const EdithPhotos = ({ id }) => {
     return (
         <form onSubmit={SubmitHandel} className="max-w-md mx-auto">
 
-            <h5 className="Tenor-Sans text-xl font-normal tracking-widest mt-10 mb-6">
+            <h5 className="Tenor-Sans text-xl font-normal tracking-widest mb-6">
                 IMÁGENES
             </h5>
 
