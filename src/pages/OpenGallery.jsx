@@ -8,9 +8,9 @@ import { useState } from "react";
 import { modifyPhoto } from "../helper/modifyPhoto";
 import { Fab } from "../components/fab/Fab";
 import { useNavigate } from "react-router-dom";
-import AddGallery from "../components/add-gallery/AddGallery";
 import EdithPhotos from "../components/edit-photos/EditPhotos";
 import EditGallery from "../components/add-gallery/edit-gallery/EditGallery";
+import { Email } from '../api/email';
 
 function OpenGallery() {
 
@@ -22,10 +22,10 @@ function OpenGallery() {
   const [newGal, setNewGal] = useState([])
 
   useEffect(() => {
-    const gallery = new Gallery();
     (async () => {
 
-      const currentGallery = await gallery.getById(id);
+      const currentGallery = await Gallery.getById(id);
+
       setGal(prev => currentGallery.gallery)
       setNewGal(prev => currentGallery.gallery.photos)
 
@@ -57,7 +57,21 @@ function OpenGallery() {
 
   }
 
-  // console.log(newGal);
+  const sendMail = async () => {
+
+    const emailInstance = new Email();
+
+    const data = {
+      email: gal?.client?.email,
+      link: `https://piclery.netlify.app/client/x/x/${id}`
+    }
+
+    const response = await emailInstance.sender(data);
+
+    console.log(response);
+
+  }
+
 
   return (
     <div>
@@ -100,7 +114,7 @@ function OpenGallery() {
           <p className="Be-Vietnam-Pro tracking-wide text-base font-light text-[#000000b8] my-3">
             {gal?.client?.phone}
           </p>
-          <div className="Be-Vietnam-Pro  font-light tracking-widest border hover:cursor-pointer rounded-full py-2 px-4 shadow text-center mt-2">
+          <div onClick={sendMail} className="Be-Vietnam-Pro  font-light tracking-widest border hover:cursor-pointer rounded-full py-2 px-4 shadow text-center mt-2">
             ENVIAR
           </div>
         </div>

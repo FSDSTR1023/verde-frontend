@@ -45,13 +45,12 @@ export class Gallery {
 
     }
 
-    getById = async (id) => {
+    static getById = async (id) => {
 
 
         try {
             const gallery = customFetch({
-                path: `/gallery/get/${id}`,
-                token: this.token,
+                path: `/gallery/get/${id}`
             })
 
             return gallery;
@@ -62,12 +61,13 @@ export class Gallery {
 
     }
 
-    static getByIdClient = async (id) => {
+    getByIdClient = async (id) => {
 
 
         try {
             const gallery = customFetch({
                 path: `/gallery/get/client/${id}`,
+                token: this.token
             })
 
             return gallery;

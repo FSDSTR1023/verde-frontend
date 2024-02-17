@@ -6,7 +6,7 @@ import { useParams } from "react-router-dom";
 import { useState } from "react";
 import { useEffect } from "react";
 import { Gallery } from "../api/gallery";
-import { modifyPhoto } from "../helper/modifyPhoto";
+import { modifyPhoto, toClient } from "../helper/modifyPhoto";
 
 const ClientGallery = () => {
 
@@ -14,20 +14,18 @@ const ClientGallery = () => {
 
   const [photos, setPhotos] = useState([]);
 
-  console.log({ photographerId })
-  console.log({ clientId })
-  console.log({ galleryId })
+  // console.log({ photographerId })
+  // console.log({ clientId })
+  // console.log({ galleryId })
 
   useEffect(() => {
 
     (async () => {
-      const gallery = await Gallery.getByIdClient(galleryId);
-      setPhotos(prev => gallery.gallery.photos);
+      const gallery = await Gallery.getById(galleryId);
+      setPhotos(prev => gallery.gallery.photos.map(ph => toClient(ph)));
     })()
 
   }, [])
-
-  console.log(photos)
 
   return (
     <div className="h-screen overflow-y-scroll bg-[#F5F5F5]">
@@ -129,10 +127,10 @@ const ClientGallery = () => {
         columnClassName="pl-2 bg-clip-padding"
       >
         {photos.map((p) => (
-          <a key={p} href={modifyPhoto(p, false, 'auto', 'auto:best')} target="_blank">
+          <a key={p} href={p} target="_blank">
             <img
               className="h-auto w-full border mb-2"
-              src={modifyPhoto(p)}
+              src={p}
               alt={p}
               loading="lazy"
             />

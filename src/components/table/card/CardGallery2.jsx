@@ -27,20 +27,21 @@ const customeTheme = {
 };
 
 
-function CardGallery2({ id }) {
+function CardGallery2({ gal }) {
 
-    const [gallery, setGallery] = useState({})
+    // const [gallery, setGallery] = useState({})
 
-    useEffect(() => {
+    // useEffect(() => {
 
-        const gallery = new Gallery();
+    //     const gallery = new Gallery();
 
-        (async () => {
-            const currentGallery = await gallery.getById(id);
-            setGallery(currentGallery.gallery)
-        })()
+    //     (async () => {
+    //         const currentGallery = await gallery.getById(id);
+    //         // setGallery(currentGallery.gallery)
+    //         console.log(currentGallery)
+    //     })()
 
-    }, [])
+    // }, [])
 
 
 
@@ -49,13 +50,13 @@ function CardGallery2({ id }) {
             className="max-w-sm p-4 h-"
             theme={customeTheme}
             imgAlt="Imagen"
-            imgSrc={!!gallery?.photos && modifyPhoto(gallery.photos[0])}
+            imgSrc={!!gal?.photos && modifyPhoto(gal.photos[0])}
         >
             <div className=" Be-Vietnam-Pro flex items-center justify-between">
                 <div className="w-full text-center flex justify-center">
-                    <a href={`${PATHS.privates.galleries}/${id}`}>
+                    <a href={`${PATHS.privates.galleries}/${gal?.id}`}>
                         <h5 className="mt-2 text-base font-medium tracking-tight text-gray-900 ">
-                            {gallery?.title?.toUpperCase()}
+                            {gal?.title?.toUpperCase()}
                         </h5>
                     </a>
                 </div>
