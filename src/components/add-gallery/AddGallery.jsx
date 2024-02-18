@@ -16,13 +16,14 @@ const AddGallery = () => {
   const SubmitHandel = async (e) => {
     e.preventDefault();
 
-    const { title, client, minPics, totalPrice } = e.target;
+    const { title, client, minPics, totalPrice, singlePrice } = e.target;
 
     if (
       !title.value
       || !client.value
       || !minPics.value
       || !totalPrice.value
+      || !singlePrice.value
     ) {
       return;
     }
@@ -36,9 +37,12 @@ const AddGallery = () => {
       title: title.value,
       client: client.value,
       minPics: minPics.value,
+      singlePrice: singlePrice.value,
       totalPrice: totalPrice.value,
       photos: photosToBack,
     };
+
+    console.log("data:", data);
 
     const gallery = new Gallery();
     await gallery.create(data);
@@ -110,6 +114,23 @@ const AddGallery = () => {
           className="peer-focus:font-medium absolute text-sm text-gray-500 duration-300 transform -translate-y-6 scale-75 top-5 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto  peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
         >
           Números de fotos a seleccionar por el ciente
+        </label>
+      </div>
+
+      <div className="relative z-0 w-full my-2 group bg">
+        <input
+          disabled={isLoading}
+          type="number"
+          name="singlePrice"
+          id="singlePrice"
+          className="top-5 block pb-2 pt-5 px-0 w-full text-base text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none focus:outline-none focus:ring-0 peer"
+          required
+        />
+        <label
+          htmlFor="singlePrice"
+          className="peer-focus:font-medium absolute text-sm text-gray-500 duration-300 transform -translate-y-6 scale-75 top-5 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto  peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
+        >
+          Precio por foto
         </label>
       </div>
 

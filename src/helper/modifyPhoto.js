@@ -16,7 +16,7 @@ export const toClient = (urlPhoto = '') => {
 
     const array = urlPhoto.split('/');
 
-    array[array.length - 2] = "l_ofub5oumcfojoxyaenkc/e_anti_removal,fl_layer_apply/"
+    array[array.length - 2] = "l_ofub5oumcfojoxyaenkc/e_anti_removal,fl_layer_apply"
 
     const finalURL = array.join('/');
 
