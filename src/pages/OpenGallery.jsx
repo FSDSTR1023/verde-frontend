@@ -100,7 +100,7 @@ function OpenGallery() {
                   fillOpacity="0.57"
                 />
               </svg>}
-              toShow={<EditGallery prevTitle={gal?.title?.toUpperCase()} prevMinPics={gal?.minPics} prevTotalPrice={gal?.totalPrice} prevClientId={gal?.client?._id} galleryId={id} />}
+              toShow={<EditGallery prevTitle={gal?.title?.toUpperCase()} prevMinPics={gal?.minPics} prevTotalPrice={gal?.totalPrice} prevClientId={gal?.client?._id} galleryId={id} prevSinglePrice={gal?.singlePrice} />}
             />
 
           </div>

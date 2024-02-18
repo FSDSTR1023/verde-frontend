@@ -20,7 +20,7 @@ const AuthProvider = ({ children }) => {
         token: localStorage.getItem('token'),
       });
 
-      if (checked.ok) {
+      if (checked?.ok) {
         setIsAuth(prev => true);
       }
 
