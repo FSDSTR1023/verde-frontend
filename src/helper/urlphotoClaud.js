@@ -3,8 +3,6 @@ export async function urlPhotoC(photos) {
   const promises = [];
 
   for (let i = 0; i < photos.length; i++) {
-    let file = photos[i];
-
     const file = photos[i];
 
     myData.append("file", file);
