@@ -41,14 +41,12 @@ function CardGallery({ gallery }) {
 
   }, [])
 
-
-
   return (
     <Card
-      className="max-w-sm p-4 relative"
+      className="max-w-sm p-4"
       theme={customeTheme}
       imgAlt="Imagen"
-      imgSrc={modifyPhoto(gallery.photos[0])}
+      imgSrc={gallery.photos[0] ? modifyPhoto(gallery.photos[0]) : "/blanco.png"}
     >
       <div className=" Be-Vietnam-Pro flex items-center justify-between">
         <div>
@@ -80,7 +78,6 @@ function CardGallery({ gallery }) {
         </div>
 
       </div>
-      <input className="absolute right-7 bottom-7 size-5" type="checkbox" name="" id="" />
     </Card >
   );
 }

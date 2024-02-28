@@ -7,10 +7,10 @@ import { Gallery } from "../api/gallery";
 import { useState } from "react";
 import { modifyPhoto } from "../helper/modifyPhoto";
 import { Fab } from "../components/fab/Fab";
-import { useRef } from "react";
 import { useNavigate } from "react-router-dom";
-import AddGallery from "../components/add-gallery/AddGallery";
 import EdithPhotos from "../components/edit-photos/EditPhotos";
+import EditGallery from "../components/add-gallery/edit-gallery/EditGallery";
+import { Email } from '../api/email';
 
 function OpenGallery() {
   const { id } = useParams();
@@ -21,13 +21,20 @@ function OpenGallery() {
   const [newGal, setNewGal] = useState([]);
 
   useEffect(() => {
-    const gallery = new Gallery();
     (async () => {
       const currentGallery = await gallery.getById(id);
       setGal((prev) => currentGallery.gallery);
       setNewGal((prev) => currentGallery.gallery.photos);
     })();
   }, []);
+
+      const currentGallery = await Gallery.getById(id);
+
+      setGal(prev => currentGallery.gallery)
+      setNewGal(prev => currentGallery.gallery.photos)
+
+    })()
+  }, [])
 
   const checkHandel = (e, p) => {
     if (!e.target.checked) {
@@ -49,9 +56,24 @@ function OpenGallery() {
     console.log(newGallery);
 
     navigate(0);
-  };
 
-  // console.log(newGal);
+  }
+
+  const sendMail = async () => {
+
+    const emailInstance = new Email();
+
+    const data = {
+      email: gal?.client?.email,
+      link: `https://piclery.netlify.app/client/x/x/${id}`
+    }
+
+    const response = await emailInstance.sender(data);
+
+    console.log(response);
+
+  }
+
 
   return (
     <div>
@@ -78,19 +100,24 @@ function OpenGallery() {
         <div className="flex flex-col text-right items-end h-full  p-4">
           <div className="flex items-center gap-1 justify-end text-lg Tenor-Sans tracking-wide">
             <h5>{gal?.title?.toUpperCase()}</h5>
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              width="15"
-              height="15"
-              viewBox="0 0 15 15"
-              fill="none"
-            >
-              <path
-                d="M13.0949 1.90506C12.2214 1.03161 10.8053 1.03165 9.93194 1.90516L2.46314 9.37481C2.20919 9.62881 2.03069 9.94825 1.9475 10.2976L1.26276 13.1736C1.22506 13.3319 1.2722 13.4985 1.3873 13.6136C1.50241 13.7287 1.66898 13.7758 1.82733 13.7381L4.70311 13.0534C5.05261 12.9702 5.37216 12.7916 5.62619 12.5376L13.095 5.06788C13.9683 4.19445 13.9683 2.77844 13.0949 1.90506ZM10.5949 2.56802C11.1021 2.06068 11.9247 2.06066 12.432 2.56797C12.9392 3.07525 12.9393 3.8977 12.4321 4.40501L11.875 4.96216L10.0379 3.12507L10.5949 2.56802ZM9.375 3.78802L11.2121 5.62511L4.96324 11.8747C4.8319 12.0061 4.66667 12.0984 4.48597 12.1414L2.35119 12.6497L2.85951 10.5148C2.90251 10.3341 2.9948 10.169 3.12609 10.0377L9.375 3.78802Z"
-                fill="black"
-                fillOpacity="0.57"
-              />
-            </svg>
+            <Fab
+              icon={<svg className="cursor-pointer"
+                xmlns="http://www.w3.org/2000/svg"
+                width="15"
+                height="15"
+                viewBox="0 0 15 15"
+                fill="none"
+              >
+
+                <path
+                  d="M13.0949 1.90506C12.2214 1.03161 10.8053 1.03165 9.93194 1.90516L2.46314 9.37481C2.20919 9.62881 2.03069 9.94825 1.9475 10.2976L1.26276 13.1736C1.22506 13.3319 1.2722 13.4985 1.3873 13.6136C1.50241 13.7287 1.66898 13.7758 1.82733 13.7381L4.70311 13.0534C5.05261 12.9702 5.37216 12.7916 5.62619 12.5376L13.095 5.06788C13.9683 4.19445 13.9683 2.77844 13.0949 1.90506ZM10.5949 2.56802C11.1021 2.06068 11.9247 2.06066 12.432 2.56797C12.9392 3.07525 12.9393 3.8977 12.4321 4.40501L11.875 4.96216L10.0379 3.12507L10.5949 2.56802ZM9.375 3.78802L11.2121 5.62511L4.96324 11.8747C4.8319 12.0061 4.66667 12.0984 4.48597 12.1414L2.35119 12.6497L2.85951 10.5148C2.90251 10.3341 2.9948 10.169 3.12609 10.0377L9.375 3.78802Z"
+                  fill="black"
+                  fillOpacity="0.57"
+                />
+              </svg>}
+              toShow={<EditGallery prevTitle={gal?.title?.toUpperCase()} prevMinPics={gal?.minPics} prevTotalPrice={gal?.totalPrice} prevClientId={gal?.client?._id} galleryId={id} prevSinglePrice={gal?.singlePrice} />}
+            />
+
           </div>
 
           <p className="Be-Vietnam-Pro tracking-wide text-base font-light text-[#000000b8] my-3">
@@ -102,7 +129,7 @@ function OpenGallery() {
           <p className="Be-Vietnam-Pro tracking-wide text-base font-light text-[#000000b8] my-3">
             {gal?.client?.phone}
           </p>
-          <div className="Be-Vietnam-Pro  font-light tracking-widest border hover:cursor-pointer rounded-full py-2 px-4 shadow text-center mt-2">
+          <div onClick={sendMail} className="Be-Vietnam-Pro  font-light tracking-widest border hover:cursor-pointer rounded-full py-2 px-4 shadow text-center mt-2">
             ENVIAR
           </div>
         </div>

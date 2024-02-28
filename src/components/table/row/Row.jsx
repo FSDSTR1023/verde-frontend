@@ -7,7 +7,7 @@ const Row = ({ name, email, phone, id }) => {
     return (
         <Table.Row className="bg-white ">
             <Table.Cell className="py-4">
-                <Checkbox />
+                <Checkbox id={id} name={id} />
             </Table.Cell>
             <Table.Cell className="whitespace-nowrap ">
                 {name}

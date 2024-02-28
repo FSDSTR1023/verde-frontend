@@ -40,7 +40,36 @@ export class Client {
     getById = async (id) => {
         try {
             const response = await customFetch({
-                path: `/client/get/${id}`,
+                path: `/client/${id}`,
+                token: this.token,
+            })
+
+            return response;
+        } catch (error) {
+            console.trace(error);
+        }
+    }
+
+    edit = async (id, data) => {
+        try {
+            const response = await customFetch({
+                path: `/client/${id}`,
+                method: 'PUT',
+                data,
+                token: this.token,
+            })
+
+            return response;
+        } catch (error) {
+            console.trace(error);
+        }
+    }
+
+    delete = async (id) => {
+        try {
+            const response = await customFetch({
+                path: `/client/${id}`,
+                method: 'DELETE',
                 token: this.token,
             })
 

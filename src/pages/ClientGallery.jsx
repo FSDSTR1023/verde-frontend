@@ -6,33 +6,47 @@ import { useParams } from "react-router-dom";
 import { useState } from "react";
 import { useEffect } from "react";
 import { Gallery } from "../api/gallery";
-import { modifyPhoto } from "../helper/modifyPhoto";
+import { modifyPhoto, toClient } from "../helper/modifyPhoto";
 
 const ClientGallery = () => {
 
   const { photographerId, clientId, galleryId } = useParams()
 
-  const [photos, setPhotos] = useState([]);
+  const [gallery, setGallery] = useState({});
+  const [buyPhotos, setBuyPhotos] = useState([]);
 
-  console.log({ photographerId })
-  console.log({ clientId })
-  console.log({ galleryId })
+  // console.log({ photographerId })
+  // console.log({ clientId })
+  // console.log({ galleryId })
 
   useEffect(() => {
 
     (async () => {
-      const gallery = await Gallery.getByIdClient(galleryId);
-      setPhotos(prev => gallery.gallery.photos);
+      const galleryResponse = await Gallery.getById(galleryId);
+      setGallery(prev => galleryResponse.gallery);
     })()
 
   }, [])
 
-  console.log(photos)
+
+  const checkHandel = (e, p) => {
+
+    if (e.target.checked) {
+      setBuyPhotos(prev => [...prev, p]);
+      return
+    }
+
+    if (!e.target.checked) {
+      const newArray = buyPhotos.filter(elem => elem !== p)
+      setBuyPhotos(prev => newArray)
+    }
+
+  }
 
   return (
     <div className="h-screen overflow-y-scroll bg-[#F5F5F5]">
       {
-        photos.length ? <SwiperPics pics={photos} objectFit="contain" /> : ''
+        gallery?.photos?.length && <SwiperPics pics={gallery?.photos?.map(ph => toClient(ph))} objectFit="contain" />
       }
       <ActionBarClient
         left={[
@@ -54,7 +68,7 @@ const ClientGallery = () => {
                 </svg>
               </span>
             ),
-            text: "100€",
+            text: `${gallery?.singlePrice} €/foto`,
           },
           {
             id: "2",
@@ -74,7 +88,7 @@ const ClientGallery = () => {
                 </svg>
               </span>
             ),
-            text: "5",
+            text: `mínimo ${gallery?.minPics} fotos`,
           },
         ]}
         right={[
@@ -96,12 +110,15 @@ const ClientGallery = () => {
                 </svg>
               </span>
             ),
-            text: "Total a pagar 0€",
+            text: `Total a pagar ${buyPhotos.length === gallery?.photos?.length ? gallery?.totalPrice : (parseInt(gallery?.singlePrice) * buyPhotos.length)}€`,
           },
           {
             id: "4",
             IconOrButton: (
-              <button className="flex gap-2 items-center hover:shadow py-2 px-4 rounded transition-all duration-200 active:shadow-none active:scale-95 my-1">
+              <button
+                className="flex gap-2 items-center hover:shadow py-2 px-4 rounded transition-all duration-200 active:shadow-none active:scale-95 my-1 disabled:text-gray-300"
+                disabled={gallery?.minPics > buyPhotos.length}
+              >
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   width="24"
@@ -111,10 +128,10 @@ const ClientGallery = () => {
                 >
                   <path
                     d="M5.69362 11.9997L2.29933 3.2715C2.0631 2.66403 2.65544 2.08309 3.2414 2.28959L3.33375 2.32885L21.3337 11.3288C21.852 11.588 21.8844 12.2975 21.4309 12.6129L21.3337 12.6705L3.33375 21.6705C2.75077 21.962 2.11746 21.426 2.2688 20.8234L2.29933 20.7278L5.69362 11.9997ZM4.4021 4.54007L7.01109 11.2491L13.6387 11.2497C14.0184 11.2497 14.3322 11.5318 14.3818 11.8979L14.3887 11.9997C14.3887 12.3794 14.1065 12.6932 13.7404 12.7428L13.6387 12.7497L7.01109 12.7491L4.4021 19.4593L19.3213 11.9997L4.4021 4.54007Z"
-                    fill="#212121"
+                    fill={gallery?.minPics > buyPhotos.length ? "#d1d5db" : "#212121"}
                   />
                 </svg>
-                Enviar Selección
+                {gallery?.minPics > buyPhotos.length ? 'Selecciona más fotos' : 'Enviar Selección'}
               </button>
             ),
           },
@@ -128,15 +145,18 @@ const ClientGallery = () => {
         className="flex w-auto"
         columnClassName="pl-2 bg-clip-padding"
       >
-        {photos.map((p) => (
-          <a key={p} href={modifyPhoto(p, false, 'auto', 'auto:best')} target="_blank">
-            <img
-              className="h-auto w-full border mb-2"
-              src={modifyPhoto(p)}
-              alt={p}
-              loading="lazy"
-            />
-          </a>
+        {gallery?.photos?.map((p) => (
+          <div key={p} className="relative">
+            <input className="absolute right-2 top-2 size-5" type="checkbox" onChange={(e) => checkHandel(e, p)} />
+            <a href={p} target="_blank">
+              <img
+                className="h-auto w-full border mb-2"
+                src={toClient(p)}
+                alt={p}
+                loading="lazy"
+              />
+            </a>
+          </div>
         ))}
       </Masonry>
     </div>
