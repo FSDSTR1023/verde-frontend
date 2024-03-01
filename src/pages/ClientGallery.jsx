@@ -9,8 +9,7 @@ import { Gallery } from "../api/gallery";
 import { modifyPhoto, toClient } from "../helper/modifyPhoto";
 
 const ClientGallery = () => {
-
-  const { photographerId, clientId, galleryId } = useParams()
+  const { photographerId, clientId, galleryId } = useParams();
 
   const [gallery, setGallery] = useState({});
   const [buyPhotos, setBuyPhotos] = useState([]);
@@ -20,34 +19,36 @@ const ClientGallery = () => {
   // console.log({ galleryId })
 
   useEffect(() => {
-
     (async () => {
       const galleryResponse = await Gallery.getById(galleryId);
-      setGallery(prev => galleryResponse.gallery);
-    })()
-
-  }, [])
-
+      setGallery((prev) => galleryResponse.gallery);
+    })();
+  }, []);
 
   const checkHandel = (e, p) => {
-
     if (e.target.checked) {
-      setBuyPhotos(prev => [...prev, p]);
-      return
+      setBuyPhotos((prev) => [...prev, p]);
+      return;
     }
 
     if (!e.target.checked) {
-      const newArray = buyPhotos.filter(elem => elem !== p)
-      setBuyPhotos(prev => newArray)
+      const newArray = buyPhotos.filter((elem) => elem !== p);
+      setBuyPhotos((prev) => newArray);
     }
-
+  };
+  function selectAll() {
+    if (buyPhotos.length === gallery?.photos?.length) {
+      setBuyPhotos([]);
+      return;
+    }
+    setBuyPhotos(gallery.photos);
   }
 
   return (
     <div className="h-screen overflow-y-scroll bg-[#F5F5F5]">
-      {
-        gallery?.photos?.length && <SwiperPics pics={gallery?.photos?.map(ph => toClient(ph))} objectFit="contain" />
-      }
+      {gallery?.photos?.length && (
+        <SwiperPics pics={gallery?.photos} objectFit="contain" />
+      )}
       <ActionBarClient
         left={[
           {
@@ -93,6 +94,32 @@ const ClientGallery = () => {
         ]}
         right={[
           {
+            id: "5",
+            IconOrButton: (
+              <button
+                className="flex gap-2 items-center hover:shadow py-2 px-4 rounded transition-all duration-200 active:shadow-none active:scale-95 my-1 disabled:text-gray-300"
+                onClick={selectAll}
+              >
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  strokeWidth={1.5}
+                  stroke="currentColor"
+                  className="w-6 h-6"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    d="M21 12a2.25 2.25 0 0 0-2.25-2.25H15a3 3 0 1 1-6 0H5.25A2.25 2.25 0 0 0 3 12m18 0v6a2.25 2.25 0 0 1-2.25 2.25H5.25A2.25 2.25 0 0 1 3 18v-6m18 0V9M3 12V9m18 0a2.25 2.25 0 0 0-2.25-2.25H5.25A2.25 2.25 0 0 0 3 9m18 0V6a2.25 2.25 0 0 0-2.25-2.25H5.25A2.25 2.25 0 0 0 3 6v3"
+                  />
+                </svg>
+
+                {`Galería completa ${gallery?.totalPrice} €`}
+              </button>
+            ),
+          },
+          {
             id: "3",
             IconOrButton: (
               <span size="small">
@@ -110,7 +137,14 @@ const ClientGallery = () => {
                 </svg>
               </span>
             ),
-            text: `Total a pagar ${buyPhotos.length === gallery?.photos?.length ? gallery?.totalPrice : (parseInt(gallery?.singlePrice) * buyPhotos.length)}€`,
+            text: `Total a pagar ${
+              (buyPhotos.length === gallery?.photos?.length
+                ? gallery?.totalPrice
+                : parseInt(gallery?.singlePrice) * buyPhotos.length) >=
+              gallery?.totalPrice
+                ? gallery?.totalPrice
+                : parseInt(gallery?.singlePrice) * buyPhotos.length
+            }€`,
           },
           {
             id: "4",
@@ -128,10 +162,16 @@ const ClientGallery = () => {
                 >
                   <path
                     d="M5.69362 11.9997L2.29933 3.2715C2.0631 2.66403 2.65544 2.08309 3.2414 2.28959L3.33375 2.32885L21.3337 11.3288C21.852 11.588 21.8844 12.2975 21.4309 12.6129L21.3337 12.6705L3.33375 21.6705C2.75077 21.962 2.11746 21.426 2.2688 20.8234L2.29933 20.7278L5.69362 11.9997ZM4.4021 4.54007L7.01109 11.2491L13.6387 11.2497C14.0184 11.2497 14.3322 11.5318 14.3818 11.8979L14.3887 11.9997C14.3887 12.3794 14.1065 12.6932 13.7404 12.7428L13.6387 12.7497L7.01109 12.7491L4.4021 19.4593L19.3213 11.9997L4.4021 4.54007Z"
-                    fill={gallery?.minPics > buyPhotos.length ? "#d1d5db" : "#212121"}
+                    fill={
+                      gallery?.minPics > buyPhotos.length
+                        ? "#d1d5db"
+                        : "#212121"
+                    }
                   />
                 </svg>
-                {gallery?.minPics > buyPhotos.length ? 'Selecciona más fotos' : 'Enviar Selección'}
+                {gallery?.minPics > buyPhotos.length
+                  ? "Selecciona más fotos"
+                  : "Enviar Selección"}
               </button>
             ),
           },
@@ -147,11 +187,16 @@ const ClientGallery = () => {
       >
         {gallery?.photos?.map((p) => (
           <div key={p} className="relative">
-            <input className="absolute right-2 top-2 size-5" type="checkbox" onChange={(e) => checkHandel(e, p)} />
+            <input
+              className="absolute right-2 top-2 size-5"
+              type="checkbox"
+              onChange={(e) => checkHandel(e, p)}
+              checked={buyPhotos.includes(p)}
+            />
             <a href={p} target="_blank">
               <img
                 className="h-auto w-full border mb-2"
-                src={toClient(p)}
+                src={p}
                 alt={p}
                 loading="lazy"
               />
