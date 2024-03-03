@@ -8,6 +8,7 @@ import { Route } from "react-router-dom";
 import { PATHS } from "./routes/paths";
 import ClientGallery from "./pages/ClientGallery";
 import RefreshProvider from './contexts/refresh/refresh.context';
+import EndPage from './components/end-page/EndPage';
 
 function App() {
 

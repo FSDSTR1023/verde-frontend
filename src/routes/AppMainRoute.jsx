@@ -18,7 +18,6 @@ const AppMainRoute = () => {
 
         <Route index element={<Home />} />
 
-
         <Route path={PATHS.index} element={<PublicRoutes />}>
           <Route path={PATHS.publics.signin} element={<SignIn />} />
           <Route path={PATHS.publics.login} element={<LogIn />} />
