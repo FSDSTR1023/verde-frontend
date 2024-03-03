@@ -5,14 +5,21 @@ import AddGallery from "../components/add-gallery/AddGallery";
 import { useEffect } from "react";
 import { Gallery } from "../api/gallery";
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import useRefreshContext from '../hooks/useRefreshContext';
+import { ToastContainer } from 'react-toastify';
+import { showToast } from '../helper/showToast';
+import io from 'socket.io-client';
+
 
 function Galleries() {
+
   const [galleries, setGalleries] = useState([]);
   const [toDelete, setToDelete] = useState([]);
-  const navigate = useNavigate();
-  const [refresh, setRefresh] = useState(false);
-  const sync = () => setRefresh((prev) => !prev);
+
+  const [isWatched, setIsWatched] = useState([]);
+
+  const { toReload, sync } = useRefreshContext()
+
   useEffect(() => {
     const gallery = new Gallery();
 
@@ -20,7 +27,23 @@ function Galleries() {
       const galleries = (await gallery.getAll()).galeries;
       setGalleries((prev) => galleries);
     })();
-  }, [refresh]);
+
+  }, [toReload]);
+
+  useEffect(() => {
+
+    const socket = io(import.meta.env.VITE_SERVER_SOCKET);
+
+    socket.emit('is_watching');
+    socket.on('is_watching', (data) => {
+      setIsWatched(prev => data.watchers)
+    })
+
+    return () => {
+      socket.disconnect()
+    }
+
+  }, [])
 
   const checkHandel = (e, id) => {
     if (e.target.checked) {
@@ -37,13 +60,27 @@ function Galleries() {
   const delGallery = async () => {
     const gallery = new Gallery();
 
-    await gallery.deleteGallery({ ids: toDelete });
+    const response = await gallery.deleteGallery({ ids: toDelete });
 
-    navigate(0);
+    showToast(
+      response,
+      toDelete.length === 1
+        ? "Galería eliminada "
+        : "Galerías eliminadas "
+    )
+
+    sync();
+    setToDelete([]);
   };
 
   return (
     <div className="relative">
+
+      <ToastContainer
+        position="bottom-center"
+        theme="colored"
+      />
+
       {toDelete.length > 0 && (
         <svg
           onClick={delGallery}
@@ -65,15 +102,13 @@ function Galleries() {
         {!!galleries.length ? (
           galleries
             ?.map((g) => (
-              <div key={g._id} className="relative">
+              <div key={g._id} className='relative' >
                 <input
                   className="absolute right-7 bottom-7 size-5"
                   type="checkbox"
                   onChange={(e) => checkHandel(e, g._id)}
-                  name=""
-                  id=""
                 />
-                <CardGallery gallery={g} />
+                <CardGallery gallery={g} isWatched={isWatched?.some(w => w.galleryId === g._id)} />
               </div>
             ))
             .reverse()
@@ -86,7 +121,7 @@ function Galleries() {
         )}
       </div>
       <Fab
-        toShow={<AddGallery sync={sync} />}
+        toShow={<AddGallery />}
         className="rounded-full fixed bottom-6 right-12 h-11 w-11 flex items-center justify-center shadow shadow-[#00000054] border bg-[#F5F5F5] hover:cursor-pointer"
         icon={
           <svg

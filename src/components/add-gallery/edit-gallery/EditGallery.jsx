@@ -1,12 +1,11 @@
 import { useState } from "react";
 import { useGetClients } from "../../../hooks/useGetClients";
-import { useNavigate } from "react-router-dom";
 import { Gallery } from "../../../api/gallery";
+import { showToast } from '../../../helper/showToast';
 
-const EditGallery = ({ prevTitle, prevMinPics, prevTotalPrice, prevClientId, galleryId, prevSinglePrice }) => {
+const EditGallery = ({ prevTitle, prevMinPics, prevTotalPrice, prevClientId, galleryId, prevSinglePrice, sync, closeModal }) => {
     const { clients } = useGetClients([]);
     const [clientSelected, setClientSelected] = useState(prevClientId);
-    const navigate = useNavigate();
 
     const SubmitHandel = async (e) => {
         e.preventDefault();
@@ -31,11 +30,11 @@ const EditGallery = ({ prevTitle, prevMinPics, prevTotalPrice, prevClientId, gal
             totalPrice: totalPrice.value,
         };
 
-        console.log(data)
-
         const gallery = new Gallery();
-        await gallery.editGallery(galleryId, data);
-        navigate(0);
+        const response = await gallery.editGallery(galleryId, data);
+        sync();
+        showToast(response, "Galería editada");
+        closeModal();
     };
 
     return (

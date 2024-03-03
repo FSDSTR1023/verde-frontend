@@ -10,7 +10,7 @@ const PrivatesRoutes = () => {
 
 
     if (!isAuth) {
-        return <Navigate to={PATHS.publics} />
+        return <Navigate to={PATHS.publics.login} />
     }
 
     return (

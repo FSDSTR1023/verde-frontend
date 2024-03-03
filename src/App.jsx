@@ -7,20 +7,21 @@ import AppMainRoute from "./routes/AppMainRoute";
 import { Route } from "react-router-dom";
 import { PATHS } from "./routes/paths";
 import ClientGallery from "./pages/ClientGallery";
+import RefreshProvider from './contexts/refresh/refresh.context';
 
 function App() {
 
   return (
-    // <ClientGallery />
-    //<OpenGallery />
     <div>
       <AuthProvider>
-        <Routes>
-          <Route path={PATHS.client} element={<ClientGallery />} />
-        </Routes>
-        <MainLayout>
-          <AppMainRoute />
-        </MainLayout>
+        <RefreshProvider>
+          <Routes>
+            <Route path={PATHS.client} element={<ClientGallery />} />
+          </Routes>
+          <MainLayout>
+            <AppMainRoute />
+          </MainLayout>
+        </RefreshProvider>
       </AuthProvider>
     </div>
   );

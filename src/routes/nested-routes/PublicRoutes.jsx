@@ -8,7 +8,6 @@ const PublicRoutes = () => {
 
   const { isAuth } = useAuthContext();
 
-
   if (isAuth) {
     return <Navigate to={PATHS.privates.galleries} />
   }

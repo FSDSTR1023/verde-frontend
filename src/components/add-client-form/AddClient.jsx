@@ -1,11 +1,11 @@
-import { useNavigate } from 'react-router-dom';
 import { Client } from '../../api/client.js';
-import { Photographer } from '../../api/photographer.js'
-import { ToastContainer, toast } from 'react-toastify';
+import { toast } from 'react-toastify';
+import useRefreshContext from '../../hooks/useRefreshContext.js';
+import { showToast } from '../../helper/showToast.js';
 
-const AddClient = () => {
+const AddClient = ({ closeModal }) => {
 
-  const navigate = useNavigate();
+  const { sync } = useRefreshContext();
 
   const submitHandle = async (e) => {
     e.preventDefault();
@@ -32,20 +32,19 @@ const AddClient = () => {
 
     const client = new Client();
 
-    await client.register(data);
+    const response = await client.register(data);
 
-    navigate(0);
+    sync();
+    closeModal();
+
+    showToast(response, response.msg)
+
   };
 
-  new Photographer();
   return (
     <form onSubmit={submitHandle} className="max-w-md mx-auto">
 
-      <ToastContainer
-        position="bottom-center"
-        theme="colored"
-      />
-      <h4 className="Tenor-Sans flex justify-center text-3xl text-[#7C7C7C] tracking-widest">
+      <h4 className="Tenor-Sans flex justify-center text-3xl text-[#7C7C7C] tracking-widest mb-10">
         NUEVO CLIENTE
       </h4>
 

@@ -55,6 +55,8 @@ const AuthProvider = ({ children }) => {
     }
 
     setIsAuth(prev => false);
+
+    return r;
   }
 
   const logout = () => {

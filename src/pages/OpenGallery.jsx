@@ -7,18 +7,21 @@ import { Gallery } from "../api/gallery";
 import { useState } from "react";
 import { modifyPhoto } from "../helper/modifyPhoto";
 import { Fab } from "../components/fab/Fab";
-import { useNavigate } from "react-router-dom";
 import EdithPhotos from "../components/edit-photos/EditPhotos";
 import EditGallery from "../components/add-gallery/edit-gallery/EditGallery";
 import { Email } from "../api/email";
+import { Link } from 'react-router-dom';
+import useRefreshContext from '../hooks/useRefreshContext';
+import { ToastContainer, toast } from 'react-toastify';
+import { showToast } from '../helper/showToast';
 
 function OpenGallery() {
   const { id } = useParams();
 
-  const navigate = useNavigate();
-
   const [gal, setGal] = useState({});
   const [newGal, setNewGal] = useState([]);
+
+  const { toReload, sync } = useRefreshContext();
 
   useEffect(() => {
     (async () => {
@@ -27,7 +30,7 @@ function OpenGallery() {
       setGal((prev) => currentGallery.gallery);
       setNewGal((prev) => currentGallery.gallery.photos);
     })();
-  }, []);
+  }, [toReload]);
 
   const checkHandel = (e, p) => {
     if (!e.target.checked) {
@@ -44,11 +47,16 @@ function OpenGallery() {
   const deleteElem = async () => {
     const gallery = new Gallery();
 
-    const newGallery = await gallery.deletePhotos(id, { newGal });
+    const response = await gallery.deletePhotos(id, { newGal });
 
-    console.log(newGallery);
+    showToast(
+      response,
+      gal?.photos?.length - newGal.length === 1
+        ? `${gal?.photos?.length - newGal.length} foto eliminada`
+        : `${gal?.photos?.length - newGal.length} fotos eliminadas`
+    )
 
-    navigate(0);
+    sync();
   };
 
   const sendMail = async () => {
@@ -61,11 +69,18 @@ function OpenGallery() {
 
     const response = await emailInstance.sender(data);
 
-    console.log(response);
+    showToast(response, `Email enviado a ${gal?.client?.email}`)
+
   };
 
   return (
     <div>
+
+      <ToastContainer
+        position="bottom-center"
+        theme="colored"
+      />
+
       <div className="flex justify-between p-10 items-center flex-wrap">
         <a
           href={
@@ -114,6 +129,7 @@ function OpenGallery() {
                   prevClientId={gal?.client?._id}
                   galleryId={id}
                   prevSinglePrice={gal?.singlePrice}
+                  sync={sync}
                 />
               }
             />
@@ -137,14 +153,12 @@ function OpenGallery() {
         </div>
       </div>
 
-      {/*  Barra de acciones */}
-
       <ActionBarClient
         right={[
           {
             id: "clientView",
             IconOrButton: (
-              <a href={`/client/x/x/${id}`}>
+              <Link to={`/client/x/x/${id}`}>
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   width="18"
@@ -157,7 +171,7 @@ function OpenGallery() {
                     fill="#7C7C7C"
                   />
                 </svg>
-              </a>
+              </Link>
             ),
           },
           {
@@ -171,6 +185,7 @@ function OpenGallery() {
                     height="15"
                     viewBox="0 0 15 15"
                     fill="none"
+                    className='hover:cursor-pointer'
                   >
                     <path
                       d="M7.49704 0C7.82246 0 8.09149 0.226558 8.13408 0.520646L8.13999 0.602405L8.14102 6.42693H14.3572C14.7122 6.42693 15 6.6967 15 7.02946C15 7.3345 14.7581 7.58659 14.4445 7.62652L14.3572 7.63198H8.14102L8.14274 13.4557C8.14282 13.7884 7.85511 14.0584 7.50013 14.0584C7.17471 14.0584 6.90569 13.8318 6.86309 13.5377L6.85718 13.4559L6.85546 7.63198H0.64278C0.287777 7.63198 0 7.36221 0 7.02946C0 6.72442 0.241814 6.47232 0.555559 6.4324L0.64278 6.42693H6.85546L6.85443 0.602646C6.85435 0.269883 7.14206 0 7.49704 0Z"
@@ -178,7 +193,7 @@ function OpenGallery() {
                     />
                   </svg>
                 }
-                toShow={<EdithPhotos id={id} />}
+                toShow={<EdithPhotos id={id} sync={sync} />}
               />
             ),
           },
