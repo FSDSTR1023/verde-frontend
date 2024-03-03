@@ -161,71 +161,64 @@ const photos = [
 ];
 
 const galleryExample = [
-    {
-        image: "/public/gallery_example.png",
-        id: "gallery_example.png",
-        title: "Como se ve la galería",
-    },
-    {
-        image: "/public/gallery_example2.png",
-        id: "gallery_example2.png",
-        title: "Como se ve la galería 2",
-    },
-]
+  {
+    image: "/public/gallery_example.png",
+    id: "gallery_example.png",
+    title: "Como se ve la galería",
+  },
+  {
+    image: "/public/gallery_example2.png",
+    id: "gallery_example2.png",
+    title: "Como se ve la galería 2",
+  },
+];
 
 const Home = () => {
   return (
     <div>
       <SwiperPics pics={photos.map((ph) => ph.image)} />
+
+      <h2 className="p-3 my-10 Tenor-Sans text-3xl text-center">
+        GALERÍAS PROFESIONALES PARA FOTÓGRAFOS
+      </h2>
+
+      <div className="flex flex-col gap-12 p-3 mx-6 my-6">
+        <div className="flex justify-evenly items-center gap-4">
+          <img className="max-w-2xl" src="/gallery_example.png" alt="#" />
+
+          {/* <SwiperPics pics={galleryExample} /> */}
+
+          <div className="max-w-2xl">
+            <h3 className="text-xl font-bold w-full Tenor-Sans text-center m-3">
+              CREA TU GALERÍA
+            </h3>
+
+            <p className="Tenor-Sans text-center p-5">
+              Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolorum,
+              accusamus ratione veritatis ipsum cum ea itaque doloribus sed
+              quisquam nulla dignissimos commodi rerum odit at reprehenderit
+              consequuntur dolores illum blanditiis.
+            </p>
+          </div>
+        </div>
+        <div className="flex justify-evenly items-center gap-4">
+          <div className="max-w-2xl">
+            <h3 className="text-xl font-bold w-full Tenor-Sans text-center m-3">
+              ADMINISTRA TUS CLIENTES
+            </h3>
+
+            <p className="Tenor-Sans text-center p-5 px-10">
+              Lorem ipsum dolor sit, amet consectetur adipisicing elit.
+              Reiciendis laudantium vero iure alias quasi enim sunt a commodi
+              aut, labore, eum perspiciatis exercitationem neque. Cum ratione
+              culpa dolores facilis quaerat?
+            </p>
+          </div>
+          <img className="max-w-2xl" src="/clients_example1.png" alt="#" />
+        </div>
+      </div>
     </div>
   );
 };
-
-
-    return (
-        <div>
-
-            <SwiperPics pics={photos.map(ph => ph.image)} />
-
-            <h2 className='p-3 my-10 Tenor-Sans text-3xl text-center'>GALERÍAS PROFESIONALES PARA FOTÓGRAFOS</h2>
-
-            <div className='flex flex-col gap-12 p-3 mx-6 my-6'>
-                <div className='flex justify-evenly items-center gap-4'>
-
-                    <img className='max-w-2xl' src="/gallery_example.png" alt="#" />
-
-                    {/* <SwiperPics pics={galleryExample} /> */}
-
-                    <div className='max-w-2xl'>
-
-                        <h3
-                            className='text-xl font-bold w-full Tenor-Sans text-center m-3'
-                        >
-                            CREA TU GALERÍA
-                        </h3>
-
-                        <p className='Tenor-Sans text-center p-5'>Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolorum, accusamus ratione veritatis ipsum cum ea itaque doloribus sed quisquam nulla dignissimos commodi rerum odit at reprehenderit consequuntur dolores illum blanditiis.</p>
-
-                    </div>
-                </div>
-                <div className='flex justify-evenly items-center gap-4'>
-                    <div className='max-w-2xl'>
-
-                        <h3
-                            className='text-xl font-bold w-full Tenor-Sans text-center m-3'
-                        >
-                            ADMINISTRA TUS CLIENTES
-                        </h3>
-
-                        <p className='Tenor-Sans text-center p-5 px-10'>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Reiciendis laudantium vero iure alias quasi enim sunt a commodi aut, labore, eum perspiciatis exercitationem neque. Cum ratione culpa dolores facilis quaerat?</p>
-
-                    </div>
-                    <img className='max-w-2xl' src="/clients_example1.png" alt="#" />
-                </div>
-            </div>
-        </div >
-
-    )
-}
 
 export default Home;
