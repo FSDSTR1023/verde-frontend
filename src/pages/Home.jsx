@@ -3,91 +3,91 @@ import SwiperPics from "../components/swiper-pics/SwiperPics";
 
 const photos = [
   {
-    image: "/photos-home/1.jpg",
+    image: "/photos-home/1.webp",
     id: "Portada",
     title: "Portada",
   },
 
   {
-    image: "/photos-home/2.jpg",
+    image: "/photos-home/2.webp",
     id: "unsplash_1avvCZEcSsI",
     title: "unsplash_1avvCZEcSsI",
   },
 
   {
-    image: "/photos-home/3.jpg",
+    image: "/photos-home/3.webp",
     id: "unsplash_5JEbKNp9uNk",
     title: "unsplash_5JEbKNp9uNk",
   },
 
   {
-    image: "/photos-home/4.jpg",
+    image: "/photos-home/4.webp",
     id: "unsplash_5VhSc5jCA2g",
     title: "unsplash_5VhSc5jCA2g",
   },
 
   {
-    image: "/photos-home/6.jpg",
+    image: "/photos-home/6.webp",
     id: "unsplash_8ezfg5oYHNY",
     title: "unsplash_8ezfg5oYHNY",
   },
 
   {
-    image: "/photos-home/8.jpg",
+    image: "/photos-home/8.webp",
     id: "unsplash_BOhDR9n4u2s",
     title: "unsplash_BOhDR9n4u2s",
   },
 
   {
-    image: "/photos-home/10.jpg",
+    image: "/photos-home/10.webp",
     id: "unsplash_ExjpauryqzA",
     title: "unsplash_ExjpauryqzA",
   },
 
   {
-    image: "/photos-home/11.jpg",
+    image: "/photos-home/11.webp",
     id: "unsplash_HabFYy1Iic0",
     title: "unsplash_HabFYy1Iic0",
   },
 
   {
-    image: "/photos-home/12.jpg",
+    image: "/photos-home/12.webp",
     id: "unsplash_IfjHaIoAoqE",
     title: "unsplash_IfjHaIoAoqE",
   },
 
   {
-    image: "/photos-home/13.jpg",
+    image: "/photos-home/13.webp",
     id: "unsplash_JFAPl7brL6U",
     title: "unsplash_JFAPl7brL6U",
   },
 
   {
-    image: "/photos-home/14.jpg",
+    image: "/photos-home/14.webp",
     id: "unsplash_NSVJAAXOYHs",
     title: "unsplash_NSVJAAXOYHs",
   },
 
   {
-    image: "/photos-home/15.jpg",
+    image: "/photos-home/15.webp",
     id: "unsplash_NYqEk7a42yc",
     title: "unsplash_NYqEk7a42yc",
   },
 
   {
-    image: "/photos-home/16.jpg",
+    image: "/photos-home/16.webp",
     id: "unsplash_Q9IotyAz3RY",
     title: "unsplash_Q9IotyAz3RY",
   },
 
   {
-    image: "/photos-home/17.jpg",
+    image: "/photos-home/17.webp",
     id: "unsplash_R2txNeMEs_I",
     title: "unsplash_R2txNeMEs_I",
   },
 
   {
-    image: "/photos-home/19.jpg",
+    image: "/photos-home/19.webp",
     id: "unsplash_XySWtbETa1M",
     title: "unsplash_XySWtbETa1M",
   },
