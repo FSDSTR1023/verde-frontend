@@ -1,14 +1,13 @@
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
 import { urlPhotoC } from "../../helper/urlphotoClaud";
 import { Gallery } from "../../api/gallery";
 import { MyDropzone } from "../add-gallery/drop-zone/MyDropzone";
 import LoadingButon from "../loadingButton/loadingButon";
+import { showToast } from '../../helper/showToast';
 
-const EdithPhotos = ({ id }) => {
+const EdithPhotos = ({ id, sync, closeModal }) => {
     const [photos, setPhotos] = useState([]);
     const [isLoading, setIsLoadin] = useState(false);
-    const navigate = useNavigate();
 
     const SubmitHandel = async (e) => {
         e.preventDefault();
@@ -23,9 +22,16 @@ const EdithPhotos = ({ id }) => {
         };
 
         const gallery = new Gallery();
-        await gallery.addPhoto(id, data);
+        const response = await gallery.addPhoto(id, data);
         setIsLoadin((prev) => false);
-        navigate(0);
+        sync();
+        showToast(
+            response,
+            photosToBack.length === 1
+                ? `${photosToBack.length} foto añadida`
+                : `${photosToBack.length} fotos añadidas`
+        );
+        closeModal();
     };
 
     const deletePhoto = (path) => {

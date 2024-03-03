@@ -1,7 +1,6 @@
 import { Routes, Route, Navigate } from "react-router-dom";
 import SignIn from "../pages/SignIn";
 import LogIn from "../pages/LogIn";
-import ClientGallery from "../pages/ClientGallery";
 import { TableOfClients } from "../components/table/TableOfClients";
 import Galleries from "../pages/Galleries";
 import OpenGallery from "../pages/OpenGallery";
@@ -12,8 +11,6 @@ import Home from "../pages/Home";
 
 
 const AppMainRoute = () => {
-
-
 
   return (
     <>

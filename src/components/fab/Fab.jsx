@@ -1,4 +1,5 @@
 import { Button, Modal } from "flowbite-react";
+import { cloneElement } from 'react';
 import { useState } from "react";
 
 const customTheme = {
@@ -58,6 +59,11 @@ const customTheme = {
 export const Fab = ({ icon, className, toShow }) => {
   const [openModal, setOpenModal] = useState(false);
 
+  const closeModal = () => {
+    setOpenModal(false);
+  };
+
+
   return (
     <>
       <div onClick={() => setOpenModal(true)} className={className}>
@@ -71,7 +77,7 @@ export const Fab = ({ icon, className, toShow }) => {
         onClose={() => setOpenModal(false)}
       >
         <Modal.Header></Modal.Header>
-        <Modal.Body>{toShow}</Modal.Body>
+        <Modal.Body>{cloneElement(toShow, { closeModal })}</Modal.Body>
       </Modal>
     </>
   );

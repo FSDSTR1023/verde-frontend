@@ -4,6 +4,7 @@ import { Fab } from '../../fab/Fab'
 import ClientFile from '../../client-file/ClientFile'
 
 const Row = ({ name, email, phone, id }) => {
+
     return (
         <Table.Row className="bg-white ">
             <Table.Cell className="py-4">

@@ -6,11 +6,14 @@ import CardGallery2 from '../table/card/CardGallery2';
 import { Gallery } from '../../api/gallery';
 import { Fab } from '../fab/Fab';
 import EditClient from '../edit-client/EditClient';
+import useRefreshContext from '../../hooks/useRefreshContext';
 
 const ClientFile = ({ id }) => {
 
     const [client, setClient] = useState([]);
     const [galleries, setGalleries] = useState([]);
+
+    const { toReload } = useRefreshContext();
 
     useEffect(() => {
         const clientInstance = new Client();
@@ -24,11 +27,12 @@ const ClientFile = ({ id }) => {
 
         })()
 
-    }, [])
+    }, [toReload])
 
 
     return (
         <div className="flex justify-center w-full max-w rounded-b relative overflow-visible">
+
             <div className='w-full flex flex-col justify-center items-center' >
                 <div className='flex flex-col w-4/5' >
                     <div className='flex flex-col gap-10 md:flex-row md:gap-0 justify-between'>
@@ -86,8 +90,11 @@ const ClientFile = ({ id }) => {
                     <div className='flex flex-nowrap overflow-auto w-full gap-1 px-5 py-1 overflow-x-scroll'>
 
                         {
-                            galleries?.map(gal => <CardGallery2 key={gal.id} gal={gal} />)
-
+                            galleries?.length > 0
+                                ? galleries?.map(gal => <CardGallery2 key={gal.id} gal={gal} />)
+                                : <p className="text-[#C1C1C1] Be-Vietnam-Pro w-full text-lg text-center mb-10">
+                                    Este cliente aún no tiene galerías...
+                                </p>
                         }
 
                     </div>

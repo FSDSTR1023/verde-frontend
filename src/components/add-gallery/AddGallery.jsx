@@ -5,13 +5,15 @@ import { useGetClients } from "../../hooks/useGetClients.js";
 import { Gallery } from "../../api/gallery.js";
 import { urlPhotoC } from "../../helper/urlphotoClaud.js";
 import LoadingButon from "../loadingButton/loadingButon.jsx";
-import { useNavigate } from "react-router-dom";
+import useRefreshContext from '../../hooks/useRefreshContext.js';
+import { showToast } from '../../helper/showToast.js';
 
-const AddGallery = ({ sync }) => {
+const AddGallery = ({ closeModal }) => {
   const [photos, setPhotos] = useState([]);
-  const [isLoading, setIsLoadin] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
   const { clients } = useGetClients([]);
-  const navigate = useNavigate();
+
+  const { sync } = useRefreshContext()
 
   const SubmitHandel = async (e) => {
     e.preventDefault();
@@ -28,7 +30,7 @@ const AddGallery = ({ sync }) => {
       return;
     }
 
-    setIsLoadin((prev) => true);
+    setIsLoading((prev) => true);
     const urlPhotoClaud = await urlPhotoC(photos);
 
     const photosToBack = urlPhotoClaud.map(
@@ -46,12 +48,12 @@ const AddGallery = ({ sync }) => {
       photos: photosToBack,
     };
 
-    console.log("data:", data);
-
     const gallery = new Gallery();
-    await gallery.create(data);
-    setIsLoadin((prev) => false);
+    const response = await gallery.create(data);
+    setIsLoading((prev) => false);
     sync();
+    closeModal();
+    showToast(response, "Galería creada")
   };
 
   const deletePhoto = (path) => {

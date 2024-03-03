@@ -6,7 +6,8 @@ import { useParams } from "react-router-dom";
 import { useState } from "react";
 import { useEffect } from "react";
 import { Gallery } from "../api/gallery";
-import { modifyPhoto, toClient } from "../helper/modifyPhoto";
+import io from 'socket.io-client';
+
 
 const ClientGallery = () => {
   const { photographerId, clientId, galleryId } = useParams();
@@ -14,16 +15,25 @@ const ClientGallery = () => {
   const [gallery, setGallery] = useState({});
   const [buyPhotos, setBuyPhotos] = useState([]);
 
-  // console.log({ photographerId })
-  // console.log({ clientId })
-  // console.log({ galleryId })
-
   useEffect(() => {
     (async () => {
       const galleryResponse = await Gallery.getById(galleryId);
       setGallery((prev) => galleryResponse.gallery);
     })();
+
   }, []);
+
+  useEffect(() => {
+
+    const socket = io(import.meta.env.VITE_SERVER_SOCKET);
+
+    socket.emit('gallery_data', { galleryId });
+
+    return () => {
+      socket.disconnect()
+    }
+
+  }, [])
 
   const checkHandel = (e, p) => {
     if (e.target.checked) {
@@ -49,6 +59,7 @@ const ClientGallery = () => {
       {gallery?.photos?.length && (
         <SwiperPics pics={gallery?.photos} objectFit="contain" />
       )}
+
       <ActionBarClient
         left={[
           {
@@ -137,14 +148,13 @@ const ClientGallery = () => {
                 </svg>
               </span>
             ),
-            text: `Total a pagar ${
-              (buyPhotos.length === gallery?.photos?.length
-                ? gallery?.totalPrice
-                : parseInt(gallery?.singlePrice) * buyPhotos.length) >=
+            text: `Total a pagar ${(buyPhotos.length === gallery?.photos?.length
+              ? gallery?.totalPrice
+              : parseInt(gallery?.singlePrice) * buyPhotos.length) >=
               gallery?.totalPrice
-                ? gallery?.totalPrice
-                : parseInt(gallery?.singlePrice) * buyPhotos.length
-            }€`,
+              ? gallery?.totalPrice
+              : parseInt(gallery?.singlePrice) * buyPhotos.length
+              }€`,
           },
           {
             id: "4",

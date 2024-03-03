@@ -1,5 +1,6 @@
 import React from "react";
 import useAuthContext from '../hooks/useAuthContext';
+import { ToastContainer, toast } from 'react-toastify';
 
 const LogIn = () => {
 
@@ -16,7 +17,12 @@ const LogIn = () => {
       password
     }
 
-    login(data)
+    const response = await login(data);
+
+    if (!response.ok) {
+      toast.error(response.msg);
+      return;
+    }
 
   }
 
@@ -25,6 +31,12 @@ const LogIn = () => {
       <div className="min-w-1/2 hidden xl:block">
         <img src="/img/ImagenLogIn.png" className="h-full object-cover" />
       </div>
+
+      <ToastContainer
+        position="bottom-center"
+        theme="colored"
+      />
+
 
       <div className="w-full xl:w-1/2 p-8 flex justify-center items-center  ">
         <form onSubmit={submitHandle} className=" w-full max-w-md mx-auto ">

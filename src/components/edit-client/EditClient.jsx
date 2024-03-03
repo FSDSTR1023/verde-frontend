@@ -1,10 +1,10 @@
-import { useNavigate } from 'react-router-dom';
 import { Client } from '../../api/client.js';
-import { Photographer } from '../../api/photographer.js'
+import useRefreshContext from '../../hooks/useRefreshContext.js';
+import { showToast } from '../../helper/showToast.js';
 
-const EditClient = ({ client }) => {
+const EditClient = ({ client, closeModal }) => {
 
-    const navigate = useNavigate();
+    const { sync } = useRefreshContext();
 
     const submitHandle = async (e) => {
         e.preventDefault();
@@ -20,11 +20,14 @@ const EditClient = ({ client }) => {
 
         const clientInstance = new Client();
 
-        await clientInstance.edit(client.id, data);
-        navigate(0);
+        const response = await clientInstance.edit(client.id, data);
+
+        showToast(response, "Cliente Editado ");
+        sync();
+        closeModal();
+
     };
 
-    new Photographer();
     return (
         <form onSubmit={submitHandle} className="max-w-md mx-auto">
 
