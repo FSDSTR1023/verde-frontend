@@ -35,6 +35,7 @@ function Galleries() {
     const socket = io(import.meta.env.VITE_SERVER_SOCKET);
 
     socket.emit('is_watching');
+
     socket.on('is_watching', (data) => {
       setIsWatched(prev => data.watchers)
     })

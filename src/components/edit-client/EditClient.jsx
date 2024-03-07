@@ -2,6 +2,7 @@ import { Client } from '../../api/client.js';
 import useRefreshContext from '../../hooks/useRefreshContext.js';
 import { showToast } from '../../helper/showToast.js';
 
+// million-ignore
 const EditClient = ({ client, closeModal }) => {
 
     const { sync } = useRefreshContext();

@@ -3,6 +3,7 @@ import { useGetClients } from "../../../hooks/useGetClients";
 import { Gallery } from "../../../api/gallery";
 import { showToast } from '../../../helper/showToast';
 
+// million-ignore
 const EditGallery = ({ prevTitle, prevMinPics, prevTotalPrice, prevClientId, galleryId, prevSinglePrice, sync, closeModal }) => {
     const { clients } = useGetClients([]);
     const [clientSelected, setClientSelected] = useState(prevClientId);

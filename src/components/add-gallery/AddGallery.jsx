@@ -8,10 +8,11 @@ import LoadingButon from "../loadingButton/loadingButon.jsx";
 import useRefreshContext from '../../hooks/useRefreshContext.js';
 import { showToast } from '../../helper/showToast.js';
 
+// million-ignore
 const AddGallery = ({ closeModal }) => {
   const [photos, setPhotos] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
-  const { clients } = useGetClients([]);
+  const { clients } = useGetClients();
 
   const { sync } = useRefreshContext()
 

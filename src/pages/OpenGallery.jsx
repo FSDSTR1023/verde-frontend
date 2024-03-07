@@ -219,8 +219,6 @@ function OpenGallery() {
         ]}
       />
 
-      {/* <input className="hidden" type="file" name="myInput" id="myInput" accept="image/png, image/jpeg, image/jpg" multiple onInput={(e) => console.log(e)} /> */}
-
       <Masonry
         breakpointCols={5}
         className="flex w-auto"

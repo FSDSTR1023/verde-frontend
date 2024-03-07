@@ -2,8 +2,6 @@ import JSZip from 'jszip';
 
 const EndPage = ({ photos }) => {
 
-  console.log(photos)
-
   const handleDownload = async () => {
     const zip = new JSZip();
 
